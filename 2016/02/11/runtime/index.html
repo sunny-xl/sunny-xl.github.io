@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT，sunny110,sunny, Blog, Node.js,Git,PHP, JAVA, JAVASCRIPT, HTML, CSS, jQuery" />
+  <meta name="keywords" content="Hexo,Next," />
 
 
 
@@ -87,15 +87,34 @@
 
 
 
-<meta name="description" content="Stay Hungry,Stay Foolish">
-<meta property="og:type" content="website">
-<meta property="og:title" content="sunny110`s blog">
-<meta property="og:url" content="https://sunny110.github.io/index.html">
+<meta name="description" content="[toc]
+一、runtime简介
+RunTime简称运行时。OC就是运行时机制，也就是在运行时候的一些机制，其中最主要的是消息机制。
+对于C语言，函数的调用在编译的时候会决定调用哪个函数。
+对于OC的函数，属于动态调用过程，在编译的时候并不能决定真正调用哪个函数，只有在真正运行的时候才会根据函数的名称找到对应的函数来调用。
+事实证明：
+在编译阶段，OC可以调用任何函数，即使这个函数并未实现，只要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="runtime简介及作用">
+<meta property="og:url" content="https://sunny110.github.io/2016/02/11/runtime/index.html">
 <meta property="og:site_name" content="sunny110`s blog">
-<meta property="og:description" content="Stay Hungry,Stay Foolish">
+<meta property="og:description" content="[toc]
+一、runtime简介
+RunTime简称运行时。OC就是运行时机制，也就是在运行时候的一些机制，其中最主要的是消息机制。
+对于C语言，函数的调用在编译的时候会决定调用哪个函数。
+对于OC的函数，属于动态调用过程，在编译的时候并不能决定真正调用哪个函数，只有在真正运行的时候才会根据函数的名称找到对应的函数来调用。
+事实证明：
+在编译阶段，OC可以调用任何函数，即使这个函数并未实现，只要">
+<meta property="og:updated_time" content="2017-02-15T02:08:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sunny110`s blog">
-<meta name="twitter:description" content="Stay Hungry,Stay Foolish">
+<meta name="twitter:title" content="runtime简介及作用">
+<meta name="twitter:description" content="[toc]
+一、runtime简介
+RunTime简称运行时。OC就是运行时机制，也就是在运行时候的一些机制，其中最主要的是消息机制。
+对于C语言，函数的调用在编译的时候会决定调用哪个函数。
+对于OC的函数，属于动态调用过程，在编译的时候并不能决定真正调用哪个函数，只有在真正运行的时候才会根据函数的名称找到对应的函数来调用。
+事实证明：
+在编译阶段，OC可以调用任何函数，即使这个函数并未实现，只要">
 
 
 
@@ -123,13 +142,13 @@
 
 
 
-  <link rel="canonical" href="https://sunny110.github.io/"/>
+  <link rel="canonical" href="https://sunny110.github.io/2016/02/11/runtime/"/>
 
 
 
 
 
-  <title> sunny110`s blog </title>
+  <title> runtime简介及作用 | sunny110`s blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -154,9 +173,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -257,9 +274,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -292,10 +309,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/02/11/runtime/" itemprop="url">
-                  runtime简介及作用
-                </a>
+                runtime简介及作用
               
             
           </h2>
@@ -350,6 +364,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">热度
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>℃
+            </span>
+          
 
           
 
@@ -366,9 +385,7 @@
       
 
       
-        
-          
-            <p>[toc]</p>
+        <p>[toc]</p>
 <h2 id="一、runtime简介"><a href="#一、runtime简介" class="headerlink" title="一、runtime简介"></a>一、runtime简介</h2><ul>
 <li>RunTime简称运行时。OC就是<strong>运行时机制</strong>，也就是在运行时候的一些机制，其中最主要的是消息机制。</li>
 <li>对于C语言，<strong>函数的调用在编译的时候会决定调用哪个函数</strong>。</li>
@@ -429,39 +446,92 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div></pre></td><td class="code"><pre><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line"></div><div class="line">    // 解析Plist文件</div><div class="line">    NSString *filePath = [[NSBundle mainBundle] pathForResource:@&quot;status.plist&quot; ofType:nil];</div><div class="line"></div><div class="line">    NSDictionary *statusDict = [NSDictionary dictionaryWithContentsOfFile:filePath];</div><div class="line"></div><div class="line">    // 获取字典数组</div><div class="line">    NSArray *dictArr = statusDict[@&quot;statuses&quot;];</div><div class="line"></div><div class="line">    // 自动生成模型的属性字符串</div><div class="line">//    [NSObject resolveDict:dictArr[0][@&quot;user&quot;]];</div><div class="line"></div><div class="line"></div><div class="line">    _statuses = [NSMutableArray array];</div><div class="line"></div><div class="line">    // 遍历字典数组</div><div class="line">    for (NSDictionary *dict in dictArr) &#123;</div><div class="line"></div><div class="line">        Status *status = [Status modelWithDict:dict];</div><div class="line"></div><div class="line">        [_statuses addObject:status];</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 测试数据</div><div class="line">    NSLog(@&quot;%@ %@&quot;,_statuses,[_statuses[0] user]);</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation NSObject (Model)</div><div class="line"></div><div class="line">+ (instancetype)modelWithDict:(NSDictionary *)dict&#123;</div><div class="line">    // 思路：遍历模型中所有属性-》使用运行时</div><div class="line"></div><div class="line">    // 0.创建对应的对象</div><div class="line">    id objc = [[self alloc] init];</div><div class="line"></div><div class="line">    // 1.利用runtime给对象中的成员属性赋值</div><div class="line"></div><div class="line">    // class_copyIvarList:获取类中的所有成员属性</div><div class="line">    // Ivar：成员属性的意思</div><div class="line">    // 第一个参数：表示获取哪个类中的成员属性</div><div class="line">    // 第二个参数：表示这个类有多少成员属性，传入一个Int变量地址，会自动给这个变量赋值</div><div class="line">    // 返回值Ivar *：指的是一个ivar数组，会把所有成员属性放在一个数组中，通过返回的数组就能全部获取到。</div><div class="line">    /* 类似下面这种写法</div><div class="line"></div><div class="line">     Ivar ivar;</div><div class="line">     Ivar ivar1;</div><div class="line">     Ivar ivar2;</div><div class="line">     // 定义一个ivar的数组a</div><div class="line">     Ivar a[] = &#123;ivar,ivar1,ivar2&#125;;</div><div class="line"></div><div class="line">     // 用一个Ivar *指针指向数组第一个元素</div><div class="line">     Ivar *ivarList = a;</div><div class="line"></div><div class="line">     // 根据指针访问数组第一个元素</div><div class="line">     ivarList[0];</div><div class="line"></div><div class="line">     */</div><div class="line">    unsigned int count;</div><div class="line"></div><div class="line">    // 获取类中的所有成员属性</div><div class="line">    Ivar *ivarList = class_copyIvarList(self, &amp;count);</div><div class="line"></div><div class="line">    for (int i = 0; i &lt; count; i++) &#123;</div><div class="line">        // 根据角标，从数组取出对应的成员属性</div><div class="line">        Ivar ivar = ivarList[i];</div><div class="line"></div><div class="line">        // 获取成员属性名</div><div class="line">        NSString *name = [NSString stringWithUTF8String:ivar_getName(ivar)];</div><div class="line"></div><div class="line">        // 处理成员属性名-&gt;字典中的key</div><div class="line">        // 从第一个角标开始截取</div><div class="line">        NSString *key = [name substringFromIndex:1];</div><div class="line"></div><div class="line">        // 根据成员属性名去字典中查找对应的value</div><div class="line">        id value = dict[key];</div><div class="line"></div><div class="line">        // 二级转换:如果字典中还有字典，也需要把对应的字典转换成模型</div><div class="line">        // 判断下value是否是字典</div><div class="line">        if ([value isKindOfClass:[NSDictionary class]]) &#123;</div><div class="line">            // 字典转模型</div><div class="line">            // 获取模型的类对象，调用modelWithDict</div><div class="line">            // 模型的类名已知，就是成员属性的类型</div><div class="line"></div><div class="line">            // 获取成员属性类型</div><div class="line">           NSString *type = [NSString stringWithUTF8String:ivar_getTypeEncoding(ivar)];</div><div class="line">          // 生成的是这种@&quot;@\&quot;User\&quot;&quot; 类型 -》 @&quot;User&quot;  在OC字符串中 \&quot; -&gt; &quot;，\是转义的意思，不占用字符</div><div class="line">            // 裁剪类型字符串</div><div class="line">            NSRange range = [type rangeOfString:@&quot;\&quot;&quot;];</div><div class="line"></div><div class="line">           type = [type substringFromIndex:range.location + range.length];</div><div class="line"></div><div class="line">            range = [type rangeOfString:@&quot;\&quot;&quot;];</div><div class="line"></div><div class="line">            // 裁剪到哪个角标，不包括当前角标</div><div class="line">          type = [type substringToIndex:range.location];</div><div class="line"></div><div class="line"></div><div class="line">            // 根据字符串类名生成类对象</div><div class="line">            Class modelClass = NSClassFromString(type);</div><div class="line"></div><div class="line"></div><div class="line">            if (modelClass) &#123; // 有对应的模型才需要转</div><div class="line"></div><div class="line">                // 把字典转模型</div><div class="line">                value  =  [modelClass modelWithDict:value];</div><div class="line">            &#125;</div><div class="line"></div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // 三级转换：NSArray中也是字典，把数组中的字典转换成模型.</div><div class="line">        // 判断值是否是数组</div><div class="line">        if ([value isKindOfClass:[NSArray class]]) &#123;</div><div class="line">            // 判断对应类有没有实现字典数组转模型数组的协议</div><div class="line">            if ([self respondsToSelector:@selector(arrayContainModelClass)]) &#123;</div><div class="line"></div><div class="line">                // 转换成id类型，就能调用任何对象的方法</div><div class="line">                id idSelf = self;</div><div class="line"></div><div class="line">                // 获取数组中字典对应的模型</div><div class="line">                NSString *type =  [idSelf arrayContainModelClass][key];</div><div class="line"></div><div class="line">                // 生成模型</div><div class="line">               Class classModel = NSClassFromString(type);</div><div class="line">                NSMutableArray *arrM = [NSMutableArray array];</div><div class="line">                // 遍历字典数组，生成模型数组</div><div class="line">                for (NSDictionary *dict in value) &#123;</div><div class="line">                    // 字典转模型</div><div class="line">                  id model =  [classModel modelWithDict:dict];</div><div class="line">                    [arrM addObject:model];</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                // 把模型数组赋值给value</div><div class="line">                value = arrM;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        if (value) &#123; // 有值，才需要给模型的属性赋值</div><div class="line">            // 利用KVC给模型中的属性赋值</div><div class="line">            [objc setValue:value forKey:key];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return objc;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>满分是10分的话，这篇文章你给几分</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/reward/reward_wechat.png" alt="sunny110 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/reward/reward_alipay.png" alt="sunny110 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
     </div>
+  </div>
 
-    <div>
+
       
     </div>
 
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+            <a href="/tags/Next/" rel="tag"># Next</a>
+          
+        </div>
+      
+
+      
+        
+      
 
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/02/11/runtime/"
+     data-title="runtime简介及作用"
+     data-content=""
+     data-url="https://sunny110.github.io/2016/02/11/runtime/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
 
           
           </div>
@@ -488,8 +558,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/avatar/avatar.png"
@@ -571,6 +650,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、runtime简介"><span class="nav-number">1.</span> <span class="nav-text">一、runtime简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、runtime作用"><span class="nav-number">2.</span> <span class="nav-text">二、runtime作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、发送消息"><span class="nav-number">2.1.</span> <span class="nav-text">1、发送消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、交换方法"><span class="nav-number">2.2.</span> <span class="nav-text">2、交换方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、动态添加方法"><span class="nav-number">2.3.</span> <span class="nav-text">3、动态添加方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、给分类添加属性"><span class="nav-number">2.4.</span> <span class="nav-text">4、给分类添加属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、字典转模型"><span class="nav-number">2.5.</span> <span class="nav-text">5、字典转模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字典转模型的方式一：KVC"><span class="nav-number">2.5.1.</span> <span class="nav-text">字典转模型的方式一：KVC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字典转模型的方式二：Runtime"><span class="nav-number">2.5.2.</span> <span class="nav-text">字典转模型的方式二：Runtime</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -686,6 +781,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
