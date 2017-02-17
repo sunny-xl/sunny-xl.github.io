@@ -607,7 +607,7 @@
       
         
           
-            <h2 id="一、runtime简介"><a href="#一、runtime简介" class="headerlink" title="一、runtime简介"></a>一、runtime简介</h2><ul>
+            <h2 id="runtime简介"><a href="#runtime简介" class="headerlink" title="runtime简介"></a>runtime简介</h2><ul>
 <li>RunTime简称运行时。OC就是<strong>运行时机制</strong>，也就是在运行时候的一些机制，其中最主要的是消息机制。</li>
 <li>对于C语言，<strong>函数的调用在编译的时候会决定调用哪个函数</strong>。</li>
 <li>对于OC的函数，属于<strong>动态调用</strong>过程，在编译的时候并不能决定真正调用哪个函数，只有在真正运行的时候才会根据函数的名称找到对应的函数来调用。</li>
@@ -617,7 +617,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="二、runtime作用"><a href="#二、runtime作用" class="headerlink" title="二、runtime作用"></a>二、runtime作用</h2><h3 id="1、发送消息"><a href="#1、发送消息" class="headerlink" title="1、发送消息"></a>1、发送消息</h3><ul>
+<h2 id="runtime作用"><a href="#runtime作用" class="headerlink" title="runtime作用"></a>runtime作用</h2><h3 id="发送消息"><a href="#发送消息" class="headerlink" title="发送消息"></a>发送消息</h3><ul>
 <li>方法调用的本质，就是让对象发送消息。</li>
 <li><code>objc_msgSend</code>,只有对象才能发送消息，因此以objc开头.</li>
 <li>使用<strong>消息机制前提</strong>，必须导入<code>#import &lt;objc/message.h&gt;</code></li>
@@ -626,22 +626,22 @@
 <ul>
 <li>消息机制原理:对象根据方法编号SEL去映射表查找对应的方法实现</li>
 </ul>
-<h3 id="2、交换方法"><a href="#2、交换方法" class="headerlink" title="2、交换方法"></a>2、交换方法</h3><ul>
+<h3 id="交换方法"><a href="#交换方法" class="headerlink" title="交换方法"></a>交换方法</h3><ul>
 <li>开发使用场景:系统自带的方法功能不够，给系统自带的方法扩展一些功能，并且保持原有的功能。</li>
 <li>方式一:继承系统的类，重写方法.</li>
 <li>方式二:使用runtime,交换方法.</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    // 需求：给imageNamed方法提供功能，每次加载图片就判断下图片是否加载成功。</div><div class="line">    // 步骤一：先搞个分类，定义一个能加载图片并且能打印的方法+ (instancetype)imageWithName:(NSString *)name;</div><div class="line">    // 步骤二：交换imageNamed和imageWithName的实现，就能调用imageWithName，间接调用imageWithName的实现。</div><div class="line"></div><div class="line">    UIImage *image = [UIImage imageNamed:@&quot;123&quot;];</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">@implementation UIImage (Image)</div><div class="line">// 加载分类到内存的时候调用</div><div class="line">+ (void)load&#123;</div><div class="line">    // 交换方法</div><div class="line"></div><div class="line">    // 获取imageWithName方法地址</div><div class="line">    Method imageWithName = class_getClassMethod(self, @selector(imageWithName:));</div><div class="line"></div><div class="line">    // 获取imageWithName方法地址</div><div class="line">    Method imageName = class_getClassMethod(self, @selector(imageNamed:));</div><div class="line"></div><div class="line">    // 交换方法地址，相当于交换实现方式</div><div class="line">    method_exchangeImplementations(imageWithName, imageName);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">// 不能在分类中重写系统方法imageNamed，因为会把系统的功能给覆盖掉，而且分类中不能调用super.</div><div class="line"></div><div class="line">// 既能加载图片又能打印</div><div class="line">+ (instancetype)imageWithName:(NSString *)name&#123;</div><div class="line"></div><div class="line">    // 这里调用imageWithName，相当于调用imageName</div><div class="line">    UIImage *image = [self imageWithName:name];</div><div class="line"></div><div class="line">    if (image == nil) &#123;</div><div class="line">        NSLog(@&quot;加载空的图片&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return image;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<h3 id="3、动态添加方法"><a href="#3、动态添加方法" class="headerlink" title="3、动态添加方法"></a>3、动态添加方法</h3><ul>
+<h3 id="动态添加方法"><a href="#动态添加方法" class="headerlink" title="动态添加方法"></a>动态添加方法</h3><ul>
 <li>开发使用场景：如果一个类方法非常多，加载类到内存的时候也比较耗费资源，需要给每个方法生成映射表，可以使用动态给某个类，添加方法解决。</li>
 <li>经典面试题：有没有使用performSelector，其实主要想问你有没有动态添加过方法。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line"></div><div class="line">    Person *p = [[Person alloc] init];</div><div class="line"></div><div class="line">    // 默认person，没有实现eat方法，可以通过performSelector调用，但是会报错。</div><div class="line">    // 动态添加方法就不会报错</div><div class="line">    [p performSelector:@selector(eat)];</div><div class="line"></div><div class="line">&#125;</div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">@implementation Person</div><div class="line">// 默认方法都有两个隐式参数，</div><div class="line">void eat(id self,SEL sel)</div><div class="line">&#123;</div><div class="line">    NSLog(@&quot;%@ %@&quot;,self,NSStringFromSelector(sel));</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 当一个对象调用未实现的方法，会调用这个方法处理,并且会把对应的方法列表传过来.</div><div class="line">// 刚好可以用来判断，未实现的方法是不是我们想要动态添加的方法</div><div class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel&#123;</div><div class="line"></div><div class="line">    if (sel == @selector(eat)) &#123;</div><div class="line">        // 动态添加eat方法</div><div class="line"></div><div class="line">        // 第一个参数：给哪个类添加方法</div><div class="line">        // 第二个参数：添加方法的方法编号</div><div class="line">        // 第三个参数：添加方法的函数实现（函数地址）</div><div class="line">        // 第四个参数：函数的类型，(返回值+参数类型) v:void @:对象-&gt;self :表示SEL-&gt;_cmd</div><div class="line">        class_addMethod(self, @selector(eat), eat, &quot;v@:&quot;);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return [super resolveInstanceMethod:sel];</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
-<h3 id="4、给分类添加属性"><a href="#4、给分类添加属性" class="headerlink" title="4、给分类添加属性"></a>4、给分类添加属性</h3><ul>
+<h3 id="给分类添加属性"><a href="#给分类添加属性" class="headerlink" title="给分类添加属性"></a>给分类添加属性</h3><ul>
 <li>原理：给一个类声明属性，其实本质就是给这个类添加关联，并不是直接把这个值的内存空间添加到类存空间。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line"></div><div class="line">    // 给系统NSObject类动态添加属性name</div><div class="line"></div><div class="line">    NSObject *objc = [[NSObject alloc] init];</div><div class="line">    objc.name = @&quot;小码哥&quot;;</div><div class="line">    NSLog(@&quot;%@&quot;,objc.name);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">// 定义关联的key</div><div class="line">static const char *key = &quot;name&quot;;</div><div class="line"></div><div class="line">@implementation NSObject (Property)</div><div class="line"></div><div class="line">- (NSString *)name&#123;</div><div class="line">    // 根据关联的key，获取关联的值。</div><div class="line">    return objc_getAssociatedObject(self, key);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setName:(NSString *)name&#123;</div><div class="line">    // 第一个参数：给哪个对象添加关联</div><div class="line">    // 第二个参数：关联的key，通过这个key获取</div><div class="line">    // 第三个参数：关联的value</div><div class="line">    // 第四个参数:关联的策略</div><div class="line">    objc_setAssociatedObject(self, key, name, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<h3 id="5、字典转模型"><a href="#5、字典转模型" class="headerlink" title="5、字典转模型"></a>5、字典转模型</h3><ul>
+<h3 id="字典转模型"><a href="#字典转模型" class="headerlink" title="字典转模型"></a>字典转模型</h3><ul>
 <li>设计模型：字典转模型的第一步<ul>
 <li>模型属性，通常需要跟字典中的key一一对应</li>
 <li>问题：一个一个的生成模型属性，很慢？</li>
@@ -807,14 +807,14 @@
         
           
             <p>   从一个小白开始搭建个人博客，期间参考了不少博客，踩了无数坑才搭起来的，现在总结下，希望能帮助大家少踩点坑。</p>
-<h2 id="一、整体流程："><a href="#一、整体流程：" class="headerlink" title="一、整体流程："></a>一、整体流程：</h2><ul>
+<h2 id="整体流程："><a href="#整体流程：" class="headerlink" title="整体流程："></a>整体流程：</h2><ul>
 <li>1、配置环境，安装<a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a>、<a href="https://git-scm.com/" target="_blank" rel="external">git</a></li>
 <li>2、安装<a href="https://hexo.io/docs/" target="_blank" rel="external">hexo</a></li>
 <li>3、hexo本地配置，实现本地发布、预览</li>
 <li>4、关联<a href="https://github.com" target="_blank" rel="external">Github</a></li>
 <li>5、配置hexo的主题</li>
 </ul>
-<h2 id="二、具体实现："><a href="#二、具体实现：" class="headerlink" title="二、具体实现："></a>二、具体实现：</h2><h3 id="1、配置环境"><a href="#1、配置环境" class="headerlink" title="1、配置环境"></a>1、配置环境</h3><ul>
+<h2 id="具体实现："><a href="#具体实现：" class="headerlink" title="具体实现："></a>具体实现：</h2><h3 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h3><ul>
 <li><strong>1、 Node.js 安装</strong><ul>
 <li>用来生成静态页面。移步<a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js官网</a>，下载左边稳定版的就可以，按照提示安装即可。</li>
 <li>在终端里面输入<code>node -v</code>,可以查看node.js版本,以此来验证是否安装成功</li>
@@ -827,7 +827,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="2、安装hexo"><a href="#2、安装hexo" class="headerlink" title="2、安装hexo"></a>2、安装hexo</h3><p><span style="color:red">必须确保Node.js和Git都安装好才可以正式安装Hexo了<span></span></span></p>
+<h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><p><span style="color:red">必须确保Node.js和Git都安装好才可以正式安装Hexo了<span></span></span></p>
 <p>Node.js和Git都安装好，在终端执行如下命令：<br><code>sudo npm install -g hexo</code><br>输入管理员密码（Mac登录密码）即开始安装 (sudo:linux系统管理指令 -g:全局安装)</p>
 <blockquote>
 <p>注意坑一、<a href="https://hexo.io/docs/" target="_blank" rel="external">Hexo官网</a>上的安装命令是$ npm install -g hexo-cli，安装时不要忘记前面加上sudo，否则会因为权限问题报错。</p>
@@ -835,7 +835,7 @@
 <ul>
 <li>在终端里面输入<code>hexo -v</code>,可以查看hexo版本,以此来验证是否安装成功</li>
 </ul>
-<h3 id="3、hexo本地配置，实现本地发布、预览"><a href="#3、hexo本地配置，实现本地发布、预览" class="headerlink" title="3、hexo本地配置，实现本地发布、预览"></a>3、hexo本地配置，实现本地发布、预览</h3><p>完成hexo的本地配置，即可实现本地的静态博客，实现发布文章、预览文章。</p>
+<h3 id="hexo本地配置，实现本地发布、预览"><a href="#hexo本地配置，实现本地发布、预览" class="headerlink" title="hexo本地配置，实现本地发布、预览"></a>hexo本地配置，实现本地发布、预览</h3><p>完成hexo的本地配置，即可实现本地的静态博客，实现发布文章、预览文章。</p>
 <ul>
 <li><p>初始化</p>
 <p>终端cd到一个你选定的目录，执行hexo init命令：<br><code>hexo init blog</code><br>blog是你建立的本地博客文件夹名称。</p>
@@ -856,7 +856,7 @@
 </ul>
 <p>此时，浏览器中打开网址<a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a>，就能看到博客内容如下图所示效果:</p>
 <p><img src="images/localBlog.png" alt="图片" title="本地博客效果"></p>
-<h3 id="4、关联Github"><a href="#4、关联Github" class="headerlink" title="4、关联Github"></a>4、关联Github</h3><ul>
+<h3 id="关联Github"><a href="#关联Github" class="headerlink" title="关联Github"></a>关联Github</h3><ul>
 <li>1、创建仓库<br>登录你的Github帐号，新建仓库，名为 ”用户名.github.io“ 固定写法，如sunny110.github.io 。用户名必须和你的github的用户名一致。</li>
 <li><p>2、把本地博客和github新建的仓库地址关联起来</p>
 <p>此时，本地<code>blog</code>文件夹下内容为：</p>
@@ -884,7 +884,7 @@
 </li>
 </ul>
 <p><strong>至此，搭建基于Github Pages的Hexo博客就完成了。下面的内容是介绍安装theme，如果有兴趣且还有耐心的话，请继续吧。</strong></p>
-<h3 id="5、配置hexo的主题"><a href="#5、配置hexo的主题" class="headerlink" title="5、配置hexo的主题"></a>5、配置hexo的主题</h3><p>你可以到<a href="https://hexo.io/docs/" target="_blank" rel="external">Hexo官网</a>主题页去搜寻自己喜欢的theme。这里以<a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">hexo-theme-next</a>为例</p>
+<h3 id="配置hexo的主题"><a href="#配置hexo的主题" class="headerlink" title="配置hexo的主题"></a>配置hexo的主题</h3><p>你可以到<a href="https://hexo.io/docs/" target="_blank" rel="external">Hexo官网</a>主题页去搜寻自己喜欢的theme。这里以<a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">hexo-theme-next</a>为例</p>
 <ul>
 <li><p>下载next主题</p>
 <p>终端cd到 blog 目录下执行如下命令：<br><code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code></p>
