@@ -368,23 +368,49 @@
       
         
           
-            <h2 id="Socket-简介"><a href="#Socket-简介" class="headerlink" title="Socket 简介"></a>Socket 简介</h2><pre><code>Socket是对TCP/IP协议的封装，不属于协议范畴，而是一个调用接口（API），通过Socket，我们才能使用TCP/IP协议。
-</code></pre><p>HTTP：即超文本传送协议(HypertextTransfer Protocol )。</p>
+            <h2 id="Socket-简介"><a href="#Socket-简介" class="headerlink" title="Socket 简介"></a>Socket 简介</h2><p> 以前听到Socket编程，觉得它是比较高深的编程知识，但是只要弄清Socket编程的工作原理，神秘的面纱也就揭开了。</p>
+<p>一个生活中的场景。你要打电话给一个朋友，先拨号，朋友听到电话铃声后提起电话，这时你和你的朋友就建立起了连接，就可以讲话了。等交流结束，挂断电话结束此次交谈。</p>
 <ul>
-<li>首先它是一个协议，是Web联网的基础，也是手机联网常用的协议之一,并且是基于TCP/IP协议基础之上的应用层协议。TCP/IP协议是传输层协议，主要解决数据如何在网络中传输。</li>
-<li><p>HTTP是基于请求-响应形式并且是短连接，并且是无状态的协议。HTTP连接最显著的特点是客户端发送的每次请求都需要服务器回送响应，在请求结束后，会主动释放连接。从建立连接到关闭连接的过程称为“一次连接”。</p>
-<ul>
-<li><p>1）在HTTP 1.0中，客户端的每次请求都要求建立一次单独的连接，在处理完本次请求后，就自动释放连接。</p>
+<li><p>Socket 是对 TCP/IP 协议族的一种封装，不属于协议范畴，是应用层与TCP/IP协议族通信的中间软件抽象层。从设计模式的角度看来，Socket其实就是一个门面模式，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议。</p>
 </li>
-<li><p>2）在HTTP 1.1中则可以在一次连接中处理多个请求，并且多个请求可以重叠进行，不需要等待一个请求结束后再发送下一个请求。</p>
+<li><p>Socket 还可以认为是一种网络间不同计算机上的进程通信的一种方法，利用三元组（ip地址，协议，端口）就可以唯一标识网络中的进程，网络中的进程通信可以利用这个标志与其它进程进行交互。</p>
+</li>
+<li><p>Socket 起源于 Unix ，Unix/Linux 基本哲学之一就是“一切皆文件”，都可以用“打开(open) –&gt; 读写(write/read) –&gt; 关闭(close)”模式来进行操作。因此 Socket 也被处理为一种特殊的文件。</p>
 </li>
 </ul>
-<p>由于HTTP在每次请求结束后都会主动释放连接，因此HTTP连接是一种“短连接”。</p>
-</li>
+<h2 id="Socket-原理"><a href="#Socket-原理" class="headerlink" title="Socket 原理"></a>Socket 原理</h2><h3 id="套接字（Socket）概念"><a href="#套接字（Socket）概念" class="headerlink" title="套接字（Socket）概念"></a>套接字（Socket）概念</h3><p> 套接字（Socket）是通信的基石，是支持TCP/IP协议的网络通信的基本操作单元。它是网络通信过程中端点的抽象表示，包含进行网络通信必须的五种信息：<strong>连接协议，服务器地址、服务器端口、客户端地址、客户端端口</strong>。</p>
+<p>大多数连接都是可靠的TCP连接。创建TCP连接时，主动发起连接的叫客户端，被动响应连接的叫服务器。服务器会有大量来自客户端的连接，所以，为了区别不同的应用程序进程和连接，许多计算机操作系统为应用程序与TCP／IP协议交互提供了套接字(Socket)接口。应用层可以和传输层通过Socket接口，区分来自不同应用程序进程或网络连接的通信，实现数据传输的并发服务。</p>
+<h3 id="建立socket连接"><a href="#建立socket连接" class="headerlink" title="建立socket连接"></a>建立socket连接</h3><p>建立Socket连接至少需要一对套接字，其中一个运行于客户端，称为ClientSocket，另一个运行于服务器端，称为ServerSocket。</p>
+<p>套接字之间的连接过程分为三个步骤：<strong>服务器监听，客户端请求，连接确认</strong>。</p>
+<p>服务器监听：服务器端套接字并不定位具体的客户端套接字，而是处于等待连接的状态，实时监控网络状态，等待客户端的连接请求。</p>
+<p>客户端请求：指客户端的套接字提出连接请求，要连接的目标是服务器端的套接字。为此，客户端的套接字必须首先描述它要连接的服务器的套接字，指出服务器端套接字的地址和端口号，然后就向服务器端套接字提出连接请求。</p>
+<p>连接确认：当服务器端套接字监听到或者说接收到客户端套接字的连接请求时，就响应客户端套接字的请求，建立一个新的线程，把服务器端套接字的描述发给客户端，一旦客户端确认了此描述，双方就正式建立连接。而服务器端套接字继续处于监听状态，继续接收其他客户端套接字的连接请求</p>
+<h3 id="Socket连接与TCP连接"><a href="#Socket连接与TCP连接" class="headerlink" title="Socket连接与TCP连接"></a>Socket连接与TCP连接</h3><p>创建Socket连接时，可以指定使用的传输层协议，Socket可以支持不同的传输层协议（TCP或UDP），当使用TCP协议进行连接时，该Socket连接就是一个TCP连接。</p>
+<h3 id="Socket连接与HTTP连接"><a href="#Socket连接与HTTP连接" class="headerlink" title="Socket连接与HTTP连接"></a>Socket连接与HTTP连接</h3><p>通常情况下Socket连接就是TCP连接，因此Socket连接一旦建立，连接是长连接，理论上客户端和服务器端一旦建立连接将不会主动断开此连接。Socket连接属于请求-响应形式，服务端可主动将消息推送给客户端。但在实际网络应用中，客户端到服务器之间的通信往往需要穿越多个中间节点，例如路由器、网关、防火墙等，大部分防火墙默认会关闭长时间处于非活跃状态的连接而导致Socket 连接断连，因此需要通过轮询告诉网络，该连接处于活跃状态。</p>
+<p>HTTP是基于请求-响应形式并且是短连接，并且是无状态的协议。不仅在请求时需要先建立连接，而且需要客户端向服务器发出请求后，服务器端才能回复数据。</p>
+<p>很多情况下，需要服务器端主动向客户端推送数据，保持客户端与服务器数据的实时与同步。此时若双方建立的是Socket连接，服务器就可以直接将数据传送给客户端；若双方建立的是HTTP连接，则服务器需要等到客户端发送一次请求后才能将数据传回给客户端，因此，客户端定时向服务器端发送连接请求，不仅可以保持在线，同时也是在“询问”服务器是否有新的数据，如果有就将数据传给客户端。</p>
+<h2 id="Socket使用"><a href="#Socket使用" class="headerlink" title="Socket使用"></a>Socket使用</h2><p>服务器端：</p>
+<ul>
+<li>socket() 创建套接字</li>
+<li>bind() 绑定一个端口</li>
+<li>listen() 监听端口</li>
+<li>accept() 等待客户端发送的connect请求，如果接受到就返回一个已经建立连接的SOCKET,否则继续等待</li>
+<li>read()/write() 数据交换</li>
+<li>close() 关闭连接</li>
 </ul>
-<p>Socket 连接是长连接，理论上客户端和服务器端一旦建立连接将不会主动断开此连接。Socket连接属于请求-响应形式，服务端可主动将消息推送给客户端。</p>
-<p>要保持客户端程序的在线状态，需要不断地向服务器发起连接请求。通常的做法是即使不需要获得任何数据，客户端也保持每隔一段固定的时间向服务器发送一次“保持连接”的请求，服务器在收到该请求后对客户端进行回复，表明知道客户端“在线”。若服务器长时间无法收到客户端的请求，则认为客户端“下线”，若客户端长时间无法收到服务器的回复，则认为网络已经断开。</p>
-<p>—-未完待续—-</p>
+<p>客户端：</p>
+<ul>
+<li>socket(),新建套接字</li>
+<li>connect(),向服务器端发出连接请求，如果成功则这个socket就已经与服务器端建立连接</li>
+<li>利用已经建立连接的socket采用send()或recv()函数与服务器端进行数据传递</li>
+<li>close(),关闭socket</li>
+</ul>
+<p>在iOS中以NSStream(流)来发送和接收数据,可以设置流的代理，对流状态的变化做出相应的动作(连接建立，接收到数据，连接关闭）。</p>
+<p>NSStream：数据流的父类，用于定义抽象特性，例如：打开、关闭代理，NSStream继承自CFStream(CoreFoundation)<br>NSInputStream：NSStream的子类，用于读取输入<br>NSOutputStream：NSSTream的子类，用于写输出。</p>
+<p>服务端先不提，客户端代码大概如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">//需要导入&lt;arpa/inet.h&gt;，&lt;netdb.h&gt;</div><div class="line">- (void)test</div><div class="line">&#123;</div><div class="line">NSString * host =@&quot;123.33.33.1&quot;;</div><div class="line">NSNumber * port = @1233;</div><div class="line"></div><div class="line">// 创建 socket</div><div class="line">int socketFileDescriptor = socket(AF_INET, SOCK_STREAM, 0);</div><div class="line">if (-1 == socketFileDescriptor) &#123;</div><div class="line">    NSLog(@&quot;创建失败&quot;);</div><div class="line">    return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 获取 IP 地址 </div><div class="line">struct hostent * remoteHostEnt = gethostbyname([host UTF8String]);</div><div class="line">if (NULL == remoteHostEnt) &#123;</div><div class="line">    close(socketFileDescriptor);</div><div class="line">     NSLog(@&quot;%@&quot;,@&quot;无法解析服务器的主机名&quot;);</div><div class="line">    return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">struct in_addr * remoteInAddr = (struct in_addr *)remoteHostEnt-&gt;h_addr_list[0];</div><div class="line"></div><div class="line">// 设置 socket 参数</div><div class="line">struct sockaddr_in socketParameters;</div><div class="line">socketParameters.sin_family = AF_INET;</div><div class="line">socketParameters.sin_addr = *remoteInAddr;</div><div class="line">socketParameters.sin_port = htons([port intValue]);</div><div class="line"></div><div class="line">// 连接 socket</div><div class="line">int ret = connect(socketFileDescriptor, (struct sockaddr *) &amp;socketParameters, sizeof(socketParameters));</div><div class="line">if (-1 == ret) &#123;</div><div class="line">    close(socketFileDescriptor);</div><div class="line">    NSLog(@&quot;连接失败&quot;);</div><div class="line">    return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">NSLog(@&quot;连接成功&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>大概就是这样，因为是C语言的，所以看起来不是很方便，一般开发中都会使用比较简单的方法，iOS开发中常使用github上的开源类库第三方库<a href="https://github.com/robbiehanson/CocoaAsyncSocket" target="_blank" rel="external"><strong>CocoaAsyncSocket</strong></a>来简化开发，CocoaAsyncSocket是支持TCP和UDP的。代码大概如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">- (IBAction)connectToServer:(id)sender &#123;</div><div class="line">// 1.与服务器通过三次握手建立连接</div><div class="line">NSString *host = @&quot;133.33.33.1&quot;;</div><div class="line">int port = 1212;</div><div class="line"></div><div class="line">//创建一个socket对象</div><div class="line">_socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];</div><div class="line"></div><div class="line">//连接</div><div class="line">NSError *error = nil;</div><div class="line">[_socket connectToHost:host onPort:port error:&amp;error];</div><div class="line"></div><div class="line">if (error) &#123;</div><div class="line">    NSLog(@&quot;%@&quot;,error);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">#pragma mark -socket的代理</div><div class="line">#pragma mark 连接成功</div><div class="line">-(void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port&#123;</div><div class="line">NSLog(@&quot;%s&quot;,__func__);</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">#pragma mark 断开连接</div><div class="line">-(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err&#123;</div><div class="line">if (err) &#123;</div><div class="line">    NSLog(@&quot;连接失败&quot;);</div><div class="line">&#125;else&#123;</div><div class="line">    NSLog(@&quot;正常断开&quot;);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">#pragma mark 数据发送成功</div><div class="line">-(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag&#123;</div><div class="line">NSLog(@&quot;%s&quot;,__func__);</div><div class="line"></div><div class="line">//发送完数据手动读取，-1不设置超时</div><div class="line">[sock readDataWithTimeout:-1 tag:tag];</div><div class="line">&#125;</div><div class="line"></div><div class="line">#pragma mark 读取数据</div><div class="line">-(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag&#123;</div><div class="line">NSString *receiverStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];</div><div class="line">NSLog(@&quot;%s %@&quot;,__func__,receiverStr);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
