@@ -414,17 +414,17 @@
 </ul>
 <p>让我从 MV(X) 系列开始讲起，最后讲 VIPER。</p>
 <p>MVC - 它原来的样子</p>
-<p><img src="" alt="图片"></p>
+<p><img src="/blogImages/mvc1.png" alt="MVC原来的样子"></p>
 <p>在开始讨论 Apple 的 MVC 之前，我们先来看下 传统的 MVC。</p>
 <p>在这种架构下，View 是无状态的，在 Model 变化的时候它只是简单的被 Controller 重绘；就像网页一样，点击了一个新的链接，整个网页就重新加载。尽管这种架构可以在 iOS 应用里面实现，但是由于 MVC 的三种实体被紧密耦合着，每一种实体都和其他两种有着联系，所以即便是实现了也没有什么意义。这种紧耦合还戏剧性的减少了它们被重用的可能，这恐怕不是你想要在自己的应用里面看到的。综上，传统 MVC 的例子我觉得也没有必要去写了。</p>
 <blockquote>
 <p>传统的 MVC 已经不适合当下的 iOS 开发了。</p>
 </blockquote>
 <h2 id="Apple-的-MVC"><a href="#Apple-的-MVC" class="headerlink" title="Apple 的 MVC"></a>Apple 的 MVC</h2><p>理想</p>
-<p><img src="" alt="图片"></p>
+<p><img src="/blogImages/mvc2.png" alt="MVC理想状态"></p>
 <p>View 和 Model 之间是相互独立的，它们只通过 Controller 来相互联系。有点恼人的是 Controller 是重用性最差的，因为我们一般不会把冗杂的业务逻辑放在 Model 里面，那就只能放在 Controller 里了。</p>
 <p>理论上看这么做貌似挺简单的，但是你有没有觉得有点不对劲？你甚至听过有人把 MVC 叫做重控制器模式。另外 关于 ViewController 瘦身 已经成为 iOS 开发者们热议的话题了。为什么 Apple 要沿用只是做了一点点改进的传统 MVC 架构呢？</p>
-<h2 id="现实"><a href="#现实" class="headerlink" title="现实"></a>现实</h2><p><img src="" alt="图片"></p>
+<h2 id="现实"><a href="#现实" class="headerlink" title="现实"></a>现实</h2><p><img src="/blogImages/mvc3.png" alt="MVC现实状态"></p>
 <p>Cocoa MVC 鼓励你去写重控制器是因为 View 的整个生命周期都需要它去管理，Controller 和 View 很难做到相互独立。虽然你可以把控制器里的一些业务逻辑和数据转换的工作交给 Model，但是你再想把负担往 View 里面分摊的时候就没办法了；因为 View 的主要职责就只是讲用户的操作行为交给 Controller 去处理而已。于是 ViewController 最终就变成了所有东西的代理和数据源，甚至还负责网络请求的发起和取消，还有…剩下的你来讲。</p>
 <p>像下面这种代码你应该不陌生吧：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var userCell = tableView.dequeueReusableCellWithIdentifier(&quot;identifier&quot;) as UserCell</div><div class="line">userCell.configureWithUser(user)</div></pre></td></tr></table></figure>
@@ -453,7 +453,7 @@
 <blockquote>
 <p>如果你最看重的是开发速度，那么 Cocoa MVC 就是你最好的选择。</p>
 </blockquote>
-<h2 id="MVP-保证了职责划分的（promises-delivered）-Cocoa-MVC"><a href="#MVP-保证了职责划分的（promises-delivered）-Cocoa-MVC" class="headerlink" title="MVP - 保证了职责划分的（promises delivered） Cocoa MVC"></a>MVP - 保证了职责划分的（promises delivered） Cocoa MVC</h2><p><img src="" alt="图片"></p>
+<h2 id="MVP-保证了职责划分的（promises-delivered）-Cocoa-MVC"><a href="#MVP-保证了职责划分的（promises-delivered）-Cocoa-MVC" class="headerlink" title="MVP - 保证了职责划分的（promises delivered） Cocoa MVC"></a>MVP - 保证了职责划分的（promises delivered） Cocoa MVC</h2><p><img src="/blogImages/mvp1.png" alt="MVP模式"></p>
 <p>看起来确实很像 Apple 的 MVC 对吧？确实蛮像，它的名字是 MVP（被动变化的 View）。稍等…这个意思是说 Apple 的 MVC 实际上是 MVP 吗？不是的，回想一下，在 MVC 里面 View 和 Controller 是耦合紧密的，但是对于 MVP 里面的 Presenter 来讲，它完全不关注 ViewController 的生命周期，而且 View 也能被简单 mock 出来，所以在 Presenter 里面基本没什么布局相关的代码，它的职责只是通过数据和状态更新 View。</p>
 <blockquote>
 <p><strong>如果我跟你讲 UIViewController 在这里的角色其实是 View 你感觉如何。</strong></p>
@@ -469,11 +469,11 @@
 </blockquote>
 </li>
 </ul>
-<h2 id="MVP-添加了数据绑定的另一个版本"><a href="#MVP-添加了数据绑定的另一个版本" class="headerlink" title="MVP - 添加了数据绑定的另一个版本"></a>MVP - 添加了数据绑定的另一个版本</h2><p><img src="" alt="图片"></p>
+<h2 id="MVP-添加了数据绑定的另一个版本"><a href="#MVP-添加了数据绑定的另一个版本" class="headerlink" title="MVP - 添加了数据绑定的另一个版本"></a>MVP - 添加了数据绑定的另一个版本</h2><p><img src="/blogImages/mvp2.png" alt="MVP数据绑定版本"></p>
 <p>还存在着另一种的 MVP - Supervising Controller MVP。这个版本的 MVP 包括了 View 和 Model 的直接绑定，与此同时 Presenter（Supervising Controller）仍然继续处理 View 上的用户操作，控制 View 的显示变化。</p>
 <p>但是我们之前讲过，模糊的职责划分是不好的事情，比如 View 和 Model 的紧耦合。这个道理在 Cocoa 桌面应用开发上面也是一样的。</p>
 <p>就像传统 MVC 架构一样，我找不到有什么理由需要为这个有瑕疵的架构写一个例子。</p>
-<h2 id="MVVM-是-MV-X-系列架构里面最新兴的，也是最出色的"><a href="#MVVM-是-MV-X-系列架构里面最新兴的，也是最出色的" class="headerlink" title="MVVM - 是 MV(X) 系列架构里面最新兴的，也是最出色的"></a>MVVM - 是 MV(X) 系列架构里面最新兴的，也是最出色的</h2><p><img src="" alt="图片"></p>
+<h2 id="MVVM-是-MV-X-系列架构里面最新兴的，也是最出色的"><a href="#MVVM-是-MV-X-系列架构里面最新兴的，也是最出色的" class="headerlink" title="MVVM - 是 MV(X) 系列架构里面最新兴的，也是最出色的"></a>MVVM - 是 MV(X) 系列架构里面最新兴的，也是最出色的</h2><p><img src="/blogImages/mvvm1.png" alt="MVVM架构"></p>
 <p>MVVM 架构是 MV(X) 里面最新的一个，让我们希望它在出现的时候已经考虑到了 MV(X) 模式之前所遇到的问题吧。</p>
 <p>理论上来说，Model - View - ViewModel 看起来非常棒。View 和 Model 我们已经都熟悉了，中间人的角色我们也熟悉了，但是在这里中间人的角色变成了 ViewModel。</p>
 <p>它跟 MVP 很像：</p>
@@ -491,7 +491,7 @@
 </ul>
 <p>实际上，现在提到「MVVM」你应该就会想到 ReactiveCocoa，反过来也是一样。虽然我们可以通过简单的绑定来实现 MVVM 模式，但是 ReactiveCocoa（或者同类型的框架）会让你更大限度的去理解 MVVM。</p>
 <p>响应式编程框架也有一点不好的地方，能力越大责任越大嘛。用响应式编程用得不好的话，很容易会把事情搞得一团糟。或者这么说，如果有什么地方出错了，你需要花费更多的时间去调试。看着下面这张调用堆栈图感受一下：</p>
-<p><img src="" alt="图片"></p>
+<p><img src="/blogImages/mvvm2.png" alt="堆栈图"></p>
 <p>在接下来的这个小例子中，用响应式框架（FRF）或者 KVO 都显得有点大刀小用，所以我们用另一种方式：直接的调用 ViewModel 的 showGreeting 方法去更新自己（的 greeting 属性），（在 greeting 属性的 didSet 回调里面）用 greetingDidChange 闭包函数去更新 View 的显示。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">import UIKit</div><div class="line"></div><div class="line">struct Person &#123; // Model</div><div class="line">    let firstName: String</div><div class="line">    let lastName: String</div><div class="line">&#125;</div><div class="line"></div><div class="line">protocol GreetingViewModelProtocol: class &#123;</div><div class="line">    var greeting: String? &#123; get &#125;</div><div class="line">    var greetingDidChange: ((GreetingViewModelProtocol) -&gt; ())? &#123; get set &#125; // function to call when greeting did change</div><div class="line">    init(person: Person)</div><div class="line">    func showGreeting()</div><div class="line">&#125;</div><div class="line"></div><div class="line">class GreetingViewModel : GreetingViewModelProtocol &#123;</div><div class="line">    let person: Person</div><div class="line">    var greeting: String? &#123;</div><div class="line">        didSet &#123;</div><div class="line">            self.greetingDidChange?(self)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    var greetingDidChange: ((GreetingViewModelProtocol) -&gt; ())?</div><div class="line">    required init(person: Person) &#123;</div><div class="line">        self.person = person</div><div class="line">    &#125;</div><div class="line">    func showGreeting() &#123;</div><div class="line">        self.greeting = &quot;Hello&quot; + &quot; &quot; + self.person.firstName + &quot; &quot; + self.person.lastName</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class GreetingViewController : UIViewController &#123;</div><div class="line">    var viewModel: GreetingViewModelProtocol! &#123;</div><div class="line">        didSet &#123;</div><div class="line">            self.viewModel.greetingDidChange = &#123; [unowned self] viewModel in</div><div class="line">                self.greetingLabel.text = viewModel.greeting</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    let showGreetingButton = UIButton()</div><div class="line">    let greetingLabel = UILabel()</div><div class="line"></div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        super.viewDidLoad()</div><div class="line">        self.showGreetingButton.addTarget(self.viewModel, action: &quot;showGreeting&quot;, forControlEvents: .TouchUpInside)</div><div class="line">    &#125;</div><div class="line">    // layout code goes here</div><div class="line">&#125;</div><div class="line">// Assembling of MVVM</div><div class="line">let model = Person(firstName: &quot;David&quot;, lastName: &quot;Blaine&quot;)</div><div class="line">let viewModel = GreetingViewModel(person: model)</div><div class="line">let view = GreetingViewController()</div><div class="line">view.viewModel = viewModel</div></pre></td></tr></table></figure>
 <p>然后，我们再回过头来对它各方面的表现做一个评价：</p>
@@ -503,7 +503,7 @@
 </blockquote>
 </li>
 </ul>
-<h2 id="VIPER-把搭建乐高积木的经验应用到-iOS-应用的设计上"><a href="#VIPER-把搭建乐高积木的经验应用到-iOS-应用的设计上" class="headerlink" title="VIPER - 把搭建乐高积木的经验应用到 iOS 应用的设计上"></a>VIPER - 把搭建乐高积木的经验应用到 iOS 应用的设计上</h2><p><img src="" alt="图片"></p>
+<h2 id="VIPER-把搭建乐高积木的经验应用到-iOS-应用的设计上"><a href="#VIPER-把搭建乐高积木的经验应用到-iOS-应用的设计上" class="headerlink" title="VIPER - 把搭建乐高积木的经验应用到 iOS 应用的设计上"></a>VIPER - 把搭建乐高积木的经验应用到 iOS 应用的设计上</h2><p><img src="/blogImages/viper.png" alt="VIPER架构"></p>
 <p>VIPER 是我们最后一个要介绍的框架，这个框架比较有趣的是它不属于任何一种 MV(X) 框架。</p>
 <p>到目前为止，你可能觉得我们把职责划分成三层，这个颗粒度已经很不错了吧。现在 VIPER 从另一个角度对职责进行了划分，这次划分了 五层。</p>
 <ul>
@@ -1705,7 +1705,7 @@
 </li>
 </ul>
 <p>此时，浏览器中打开网址<a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a>，就能看到博客内容如下图所示效果:</p>
-<p><img src="/images/localBlog.png" alt="图片" title="本地博客效果"></p>
+<p><img src="/blogImages/localBlog.png" alt="图片" title="本地博客效果"></p>
 <h3 id="关联Github"><a href="#关联Github" class="headerlink" title="关联Github"></a>关联Github</h3><ul>
 <li>1、创建仓库<br>登录你的Github帐号，新建仓库，名为 ”用户名.github.io“ 固定写法，如sunny110.github.io 。用户名必须和你的github的用户名一致。</li>
 <li><p>2、把本地博客和github新建的仓库地址关联起来</p>
