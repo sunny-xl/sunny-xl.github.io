@@ -96,7 +96,7 @@
 <meta property="og:description" content="RunLoop基本概念一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：
 1234567function loop() &amp;#123;    initialize();    do &amp;#123;        var message = get_next_message();        process_m">
 <meta property="og:image" content="https://sunny110.github.io/blogImages/runloop.png">
-<meta property="og:updated_time" content="2017-02-22T08:44:29.000Z">
+<meta property="og:updated_time" content="2017-02-22T09:11:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RunLoop 简介">
 <meta name="twitter:description" content="RunLoop基本概念一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：
@@ -385,6 +385,7 @@
 <li>调用解耦（Message Queue）</li>
 <li>节省CPU资源,提高程序性能:该做事时做事,该休息时休息</li>
 </ul>
+<a id="more"></a>
 <h2 id="RunLoop与线程"><a href="#RunLoop与线程" class="headerlink" title="RunLoop与线程"></a>RunLoop与线程</h2><ul>
 <li>每个线程（包括主线程）都有一个对应的 RunLoop 对象</li>
 <li>我们并不能自己创建 RunLoop 对象，但是可以获取到系统提供的 RunLoop 对象。</li>

@@ -105,7 +105,7 @@ iOS 上面的架构模式你可能之前就了解过一些，接下来我们会�
 <meta property="og:image" content="https://sunny110.github.io/blogImages/mvvm1.png">
 <meta property="og:image" content="https://sunny110.github.io/blogImages/mvvm2.png">
 <meta property="og:image" content="https://sunny110.github.io/blogImages/viper.png">
-<meta property="og:updated_time" content="2017-02-22T05:01:13.000Z">
+<meta property="og:updated_time" content="2017-02-22T09:09:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 架构模式 - 简述 MVC, MVP, MVVM 和 VIPER (译)">
 <meta name="twitter:description" content="在使用 iOS 的 MVC 时候感觉怪怪的？想要尝试下 MVVM？之前听说过 VIPER，但是又纠结是不是值得去学？
@@ -404,6 +404,7 @@ iOS 上面的架构模式你可能之前就了解过一些，接下来我们会�
 <li><strong>可测性</strong> 通常取决于上面说的第一点（不用太担心，如果架构何时的话，做到这点并不难）。</li>
 <li><strong>易用</strong> 并且维护成本低。</li>
 </ol>
+<a id="more"></a>
 <h2 id="为什么要划分？"><a href="#为什么要划分？" class="headerlink" title="为什么要划分？"></a>为什么要划分？</h2><p>当我们试图去理解事物的工作原理的时候，划分可以减轻我们的脑部压力。如果你觉得开发的越多，大脑就越能适应去处理复杂的工作，确实是这样。但是大脑的这种能力不是线性提高的，而且很快就会达到一个瓶颈。所以要处理复杂的事情，最好的办法还是在遵循 单一责任原则 的条件下，将它的职责划分到多个实体中去。</p>
 <h2 id="为什么要可测性？"><a href="#为什么要可测性？" class="headerlink" title="为什么要可测性？"></a>为什么要可测性？</h2><p>对于那些对单元测试心存感激的人来说，应该不会有这方面的疑问：单元测试帮助他们测试出了新功能里面的错误，或者是帮他们找出了重构的一个复杂类里面的 bug。这意味着这些单元测试帮助这些开发者们在程序运行之前就发现了问题，这些问题如果被忽视的话很可能会提交到用户的设备上去；而修复这些问题，又至少需要一周左右的时间（AppStore 审核）。</p>
 <h2 id="为什么要易用"><a href="#为什么要易用" class="headerlink" title="为什么要易用"></a>为什么要易用</h2><p>这块没什么好说的，直说一点：最好的代码是那些从未被写出来的代码。代码写的越少，问题就越少；所以开发者想少写点代码并不一定就是因为他懒。还有，当你想用一个比较 聪明 的方法的时候，全完不要忽略了它的维护成本</p>

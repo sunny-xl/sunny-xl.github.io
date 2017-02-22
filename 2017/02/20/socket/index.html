@@ -99,7 +99,7 @@ Socket 是对 TCP/IP 协议族的一种封装，不属于协议范畴，是应�
 一个生活中的场景。你要打电话给一个朋友，先拨号，朋友听到电话铃声后提起电话，这时你和你的朋友就建立起了连接，就可以讲话了。等交流结束，挂断电话结束此次交谈。
 
 Socket 是对 TCP/IP 协议族的一种封装，不属于协议范畴，是应用层与TCP/IP协议族通信的">
-<meta property="og:updated_time" content="2017-02-20T14:50:27.000Z">
+<meta property="og:updated_time" content="2017-02-22T09:12:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Socket入门及使用">
 <meta name="twitter:description" content="Socket 简介 以前听到Socket编程，觉得它是比较高深的编程知识，但是只要弄清Socket编程的工作原理，神秘的面纱也就揭开了。
@@ -388,6 +388,7 @@ Socket 是对 TCP/IP 协议族的一种封装，不属于协议范畴，是应�
 </ul>
 <h2 id="Socket-原理"><a href="#Socket-原理" class="headerlink" title="Socket 原理"></a>Socket 原理</h2><h3 id="套接字（Socket）概念"><a href="#套接字（Socket）概念" class="headerlink" title="套接字（Socket）概念"></a>套接字（Socket）概念</h3><p> 套接字（Socket）是通信的基石，是支持TCP/IP协议的网络通信的基本操作单元。它是网络通信过程中端点的抽象表示，包含进行网络通信必须的五种信息：<strong>连接协议，服务器地址、服务器端口、客户端地址、客户端端口</strong>。</p>
 <p>大多数连接都是可靠的TCP连接。创建TCP连接时，主动发起连接的叫客户端，被动响应连接的叫服务器。服务器会有大量来自客户端的连接，所以，为了区别不同的应用程序进程和连接，许多计算机操作系统为应用程序与TCP／IP协议交互提供了套接字(Socket)接口。应用层可以和传输层通过Socket接口，区分来自不同应用程序进程或网络连接的通信，实现数据传输的并发服务。</p>
+<a id="more"></a>
 <h3 id="建立socket连接"><a href="#建立socket连接" class="headerlink" title="建立socket连接"></a>建立socket连接</h3><p>建立Socket连接至少需要一对套接字，其中一个运行于客户端，称为ClientSocket，另一个运行于服务器端，称为ServerSocket。</p>
 <p>套接字之间的连接过程分为三个步骤：<strong>服务器监听，客户端请求，连接确认</strong>。</p>
 <p>服务器监听：服务器端套接字并不定位具体的客户端套接字，而是处于等待连接的状态，实时监控网络状态，等待客户端的连接请求。</p>
