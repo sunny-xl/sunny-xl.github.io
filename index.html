@@ -371,15 +371,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function loop() &#123;</div><div class="line">    initialize();</div><div class="line">    do &#123;</div><div class="line">        var message = get_next_message();</div><div class="line">        process_message(message);</div><div class="line">    &#125; while (message != quit);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这种模型通常被称作 <a href="https://en.wikipedia.org/wiki/Event_loop">Event Loop</a>。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：<strong>如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒</strong>。</p>
 <p>所以，RunLoop 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息），函数返回。</p>
-<p>OSX/iOS 系统中，提供了两个这样的对象：NSRunLoop 和 CFRunLoopRef。<br>CFRunLoopRef 是在 CoreFoundation 框架内的，它提供了纯 C 函数的 API，所有这些 API 都是线程安全的。<br>NSRunLoop 是基于 CFRunLoopRef 的封装，提供了面向对象的 API，但是这些 API 不是线程安全的。</p>
-<p>一张苹果官方文档的图，大体说明了 Runloop 的工作模式：</p>
-<p><img src="/blogImages/runloop.png" alt="RunLoop"></p>
-<h2 id="RunLoop基本作用"><a href="#RunLoop基本作用" class="headerlink" title="RunLoop基本作用"></a>RunLoop基本作用</h2><ul>
-<li>保持程序的持续运行,保持线程的持续运行，并接受用户输入</li>
-<li>处理App中的各种事件(比如触摸事件,定时器事件,Selector事件)</li>
-<li>调用解耦（Message Queue）</li>
-<li>节省CPU资源,提高程序性能:该做事时做事,该休息时休息</li>
-</ul>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/02/22/runloop/#more" rel="contents">
@@ -531,21 +522,6 @@
 <p>（MVC）谁来负责网络请求：是 Model 还是 Controller？</p>
 <p>（MVVM）我该怎么去把一个 Model 传递给一个新创建的 View 的 ViewModel？</p>
 <p>（VIPER）谁来负责创建 VIPER 模块：是 Router 还是 Presenter？</p>
-<h2 id="为何要在意架构的选择呢？"><a href="#为何要在意架构的选择呢？" class="headerlink" title="为何要在意架构的选择呢？"></a>为何要在意架构的选择呢？</h2><p>因为如果你不在意的话，难保一天，你就需要去调试一个巨大无比又有着各种问题的类，然后你会发现在这个类里面，你完全就找不到也修复不了任何 bug。一般来说，把这么大的一个类作为整体放在脑子里记着是一件非常困难的事情，你总是难免会忘掉一些比较重要的细节。如果你发现在你的应用里面已经开始出现这种状况了，那你很可能遇到过下面这类问题：</p>
-<ul>
-<li>这个类是一个 UIViewController 的子类。</li>
-<li>你的数据直接保存在了 UIViewController 里面。</li>
-<li>你的 UIViews 好像什么都没做。</li>
-<li>你的 Model 只是一个纯粹的数据结构</li>
-<li>你的单元测试什么都没有覆盖到</li>
-</ul>
-<p>其实即便你遵循了 Apple 的设计规范，实现了 Apple 的 MVC 框架，也还是一样会遇到上面这些问题；所以也没什么好失落的。Apple 的 MVC 框架 有它自身的缺陷，不过这个我们后面再说。</p>
-<p>让我们先来定义一下好的框架应该具有的特征：</p>
-<ol>
-<li>用严格定义的角色，平衡的将职责 <strong>划分</strong> 给不同的实体。</li>
-<li><strong>可测性</strong> 通常取决于上面说的第一点（不用太担心，如果架构何时的话，做到这点并不难）。</li>
-<li><strong>易用</strong> 并且维护成本低。</li>
-</ol>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/02/21/mvc-mvp-mvvm-cdd/#more" rel="contents">
@@ -700,8 +676,6 @@
 <li><p>Socket 起源于 Unix ，Unix/Linux 基本哲学之一就是“一切皆文件”，都可以用“打开(open) –&gt; 读写(write/read) –&gt; 关闭(close)”模式来进行操作。因此 Socket 也被处理为一种特殊的文件。</p>
 </li>
 </ul>
-<h2 id="Socket-原理"><a href="#Socket-原理" class="headerlink" title="Socket 原理"></a>Socket 原理</h2><h3 id="套接字（Socket）概念"><a href="#套接字（Socket）概念" class="headerlink" title="套接字（Socket）概念"></a>套接字（Socket）概念</h3><p> 套接字（Socket）是通信的基石，是支持TCP/IP协议的网络通信的基本操作单元。它是网络通信过程中端点的抽象表示，包含进行网络通信必须的五种信息：<strong>连接协议，服务器地址、服务器端口、客户端地址、客户端端口</strong>。</p>
-<p>大多数连接都是可靠的TCP连接。创建TCP连接时，主动发起连接的叫客户端，被动响应连接的叫服务器。服务器会有大量来自客户端的连接，所以，为了区别不同的应用程序进程和连接，许多计算机操作系统为应用程序与TCP／IP协议交互提供了套接字(Socket)接口。应用层可以和传输层通过Socket接口，区分来自不同应用程序进程或网络连接的通信，实现数据传输的并发服务。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/02/20/socket/#more" rel="contents">
@@ -859,17 +833,6 @@
 <li>Hook原理：在每次调用一个API返回结果之前，先执行你自己的方法，改变结果的输出。</li>
 </ul>
 </li>
-<li><p>1.3 ReactiveCocoa核心方法bind</p>
-<ul>
-<li><p>ReactiveCocoa操作的核心方法是<code>bind</code>（绑定）,而且RAC中核心开发方式，也是<code>绑定</code>，之前的开发方式是<code>赋值</code>，而用RAC开发，应该把重心放在绑定，也就是可以在创建一个对象的时候，就绑定好以后想要做的事情，而不是等赋值之后在去做事情。</p>
-</li>
-<li><p>列如：把数据展示到控件上，之前都是重写控件的setModel方法，用RAC就可以在一开始创建控件的时候，就绑定好数据。</p>
-</li>
-<li><p>在开发中很少使用bind方法，bind属于RAC中的底层方法，RAC已经封装了很多好用的其他方法，底层都是调用bind，用法比bind简单.</p>
-</li>
-<li><code>bind</code>方法简单介绍和使用。</li>
-</ul>
-</li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1017,7 +980,6 @@
         
           <h2 id="1、ReactiveCocoa简介"><a href="#1、ReactiveCocoa简介" class="headerlink" title="1、ReactiveCocoa简介"></a>1、ReactiveCocoa简介</h2><p><a href="https://github.com/ReactiveCocoa/ReactiveCocoa">ReactiveCocoa</a>（简称为RAC）是由Github 开源的一个应用于iOS和OS X开发的新框架。RAC具有函数式编程和响应式编程的特性。</p>
 <h2 id="2、ReactiveCocoa编程思想"><a href="#2、ReactiveCocoa编程思想" class="headerlink" title="2、ReactiveCocoa编程思想"></a>2、ReactiveCocoa编程思想</h2><p>RAC真正的强大之处在于改变了我们的编程思想，它的灵感来自于函数式响应式编程，所以RAC也被描述为<strong>函数响应式编程（FRP）框架</strong>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">简单介绍下常见的编程思想：</div><div class="line">- 面向过程：处理事情以过程为核心，一步一步的实现。代表为 C 语言</div><div class="line">- 面向对象：万物皆为对象。代表为Java、OC</div><div class="line">- 链式编程思想：是将多个操作（多行代码）通过点号(.)链接在一起成为一句代码,使代码可读性好。a(1).b(2).c(3)</div><div class="line"> * 特点：方法的返回值是block,block必须有返回值（本身对象），block参数（需要操作的值）</div><div class="line"> * 代表：masonry框架</div><div class="line">- 响应式编程思想（Reactive Programming）：不需要考虑调用顺序，只需要知道考虑结果，类似于蝴蝶效应，产生一个事件，会影响很多东西，这些事件像流一样的传播出去，然后影响结果，借用面向对象的一句话，万物皆是流。</div><div class="line"> * 代表：KVO运用</div><div class="line">- 函数式编程思想（Functional Programming）：是把操作尽量写成一系列嵌套的函数或者方法调用。</div><div class="line"> * 特点：每个方法必须有返回值（本身对象）,把函数或者Block当做参数,block参数（需要操作的值）block返回值（操作结果）</div><div class="line"> * 代表：RAC。</div></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2016/12/20/RAC1/#more" rel="contents">
@@ -1172,15 +1134,6 @@
 </ul>
 </li>
 </ul>
-<h2 id="runtime作用"><a href="#runtime作用" class="headerlink" title="runtime作用"></a>runtime作用</h2><h3 id="发送消息"><a href="#发送消息" class="headerlink" title="发送消息"></a>发送消息</h3><ul>
-<li>方法调用的本质，就是让对象发送消息。</li>
-<li><code>objc_msgSend</code>,只有对象才能发送消息，因此以objc开头.</li>
-<li>使用<strong>消息机制前提</strong>，必须导入<code>#import &lt;objc/message.h&gt;</code></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">// 创建person对象</div><div class="line">Person *p = [[Person alloc] init];</div><div class="line"></div><div class="line">// 调用对象方法</div><div class="line">[p eat];</div><div class="line"></div><div class="line">// 本质：让对象发送消息</div><div class="line">objc_msgSend(p, @selector(eat));</div><div class="line"></div><div class="line">// 调用类方法的方式：两种</div><div class="line">// 第一种通过类名调用</div><div class="line">[Person eat];</div><div class="line">// 第二种通过类对象调用</div><div class="line">[[Person class] eat];</div><div class="line"></div><div class="line">// 用类名调用类方法，底层会自动把类名转换成类对象调用</div><div class="line">// 本质：让类对象发送消息</div><div class="line">objc_msgSend([Person class], @selector(eat));</div></pre></td></tr></table></figure>
-<ul>
-<li>消息机制原理:对象根据方法编号SEL去映射表查找对应的方法实现</li>
-</ul>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2016/03/11/runtime/#more" rel="contents">
@@ -1332,19 +1285,6 @@
 <li>3、hexo本地配置，实现本地发布、预览</li>
 <li>4、关联<a href="https://github.com">Github</a></li>
 <li>5、配置hexo的主题</li>
-</ul>
-<h2 id="具体实现："><a href="#具体实现：" class="headerlink" title="具体实现："></a>具体实现：</h2><h3 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h3><ul>
-<li><strong>1、 Node.js 安装</strong><ul>
-<li>用来生成静态页面。移步<a href="https://nodejs.org/en/">Node.js官网</a>，下载左边稳定版的就可以，按照提示安装即可。</li>
-<li>在终端里面输入<code>node -v</code>,可以查看node.js版本,以此来验证是否安装成功</li>
-<li>也可以按照hexo文档上提示用命令行安装Node.js</li>
-</ul>
-</li>
-<li><strong>2、 git安装</strong><ul>
-<li>Mac电脑自带git,如果没有可以参考上<a href="https://hexo.io/docs/">hexo官网</a>的安装方法</li>
-<li>在终端里面输入<code>git --version</code>,可以查看git版本，以此来验证是否安装成功</li>
-</ul>
-</li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">

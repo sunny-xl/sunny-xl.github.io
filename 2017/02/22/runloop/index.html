@@ -96,7 +96,7 @@
 <meta property="og:description" content="RunLoop基本概念一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：
 1234567function loop() &amp;#123;    initialize();    do &amp;#123;        var message = get_next_message();        process_m">
 <meta property="og:image" content="https://sunny110.github.io/blogImages/runloop.png">
-<meta property="og:updated_time" content="2017-02-22T09:11:20.000Z">
+<meta property="og:updated_time" content="2017-02-22T09:22:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RunLoop 简介">
 <meta name="twitter:description" content="RunLoop基本概念一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：
@@ -376,6 +376,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function loop() &#123;</div><div class="line">    initialize();</div><div class="line">    do &#123;</div><div class="line">        var message = get_next_message();</div><div class="line">        process_message(message);</div><div class="line">    &#125; while (message != quit);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这种模型通常被称作 <a href="https://en.wikipedia.org/wiki/Event_loop" target="_blank" rel="external">Event Loop</a>。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：<strong>如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒</strong>。</p>
 <p>所以，RunLoop 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息），函数返回。</p>
+<a id="more"></a>
 <p>OSX/iOS 系统中，提供了两个这样的对象：NSRunLoop 和 CFRunLoopRef。<br>CFRunLoopRef 是在 CoreFoundation 框架内的，它提供了纯 C 函数的 API，所有这些 API 都是线程安全的。<br>NSRunLoop 是基于 CFRunLoopRef 的封装，提供了面向对象的 API，但是这些 API 不是线程安全的。</p>
 <p>一张苹果官方文档的图，大体说明了 Runloop 的工作模式：</p>
 <p><img src="/blogImages/runloop.png" alt="RunLoop"></p>
@@ -385,7 +386,6 @@
 <li>调用解耦（Message Queue）</li>
 <li>节省CPU资源,提高程序性能:该做事时做事,该休息时休息</li>
 </ul>
-<a id="more"></a>
 <h2 id="RunLoop与线程"><a href="#RunLoop与线程" class="headerlink" title="RunLoop与线程"></a>RunLoop与线程</h2><ul>
 <li>每个线程（包括主线程）都有一个对应的 RunLoop 对象</li>
 <li>我们并不能自己创建 RunLoop 对象，但是可以获取到系统提供的 RunLoop 对象。</li>
