@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT，sunny110,sunny, Blog, Node.js,Git,PHP, JAVA, JAVASCRIPT, HTML, CSS, jQuery,iOS,ios," />
+  <meta name="keywords" content="iOS," />
 
 
 
@@ -87,15 +87,19 @@
 
 
 
-<meta name="description" content="Stay Hungry,Stay Foolish">
-<meta property="og:type" content="website">
-<meta property="og:title" content="sunny110`s blog">
-<meta property="og:url" content="https://sunny110.github.io/categories/iOS/index.html">
+<meta name="description" content="简介webView是我们日常开发中不可缺少的一个组件，通常我们都是使用UIWebView来实现，但是加载速度慢、占用内存多、优化困难等问题一直困扰着大家。如果加载网页多，还可能因为过量占用内存而给系统kill掉，各种优化的方法效果也不那么明显。
+Xcode8发布以后，编译器开始不支持IOS7，所以很多应用在适配IOS10之后都不在适配IOS7了，其中包括了很多大公司，网易新闻，滴滴出行等。因此，我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UIWebView之进阶替换WKWebView">
+<meta property="og:url" content="https://sunny110.github.io/2017/03/12/WKWebView/index.html">
 <meta property="og:site_name" content="sunny110`s blog">
-<meta property="og:description" content="Stay Hungry,Stay Foolish">
+<meta property="og:description" content="简介webView是我们日常开发中不可缺少的一个组件，通常我们都是使用UIWebView来实现，但是加载速度慢、占用内存多、优化困难等问题一直困扰着大家。如果加载网页多，还可能因为过量占用内存而给系统kill掉，各种优化的方法效果也不那么明显。
+Xcode8发布以后，编译器开始不支持IOS7，所以很多应用在适配IOS10之后都不在适配IOS7了，其中包括了很多大公司，网易新闻，滴滴出行等。因此，我">
+<meta property="og:updated_time" content="2017-03-12T07:15:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sunny110`s blog">
-<meta name="twitter:description" content="Stay Hungry,Stay Foolish">
+<meta name="twitter:title" content="UIWebView之进阶替换WKWebView">
+<meta name="twitter:description" content="简介webView是我们日常开发中不可缺少的一个组件，通常我们都是使用UIWebView来实现，但是加载速度慢、占用内存多、优化困难等问题一直困扰着大家。如果加载网页多，还可能因为过量占用内存而给系统kill掉，各种优化的方法效果也不那么明显。
+Xcode8发布以后，编译器开始不支持IOS7，所以很多应用在适配IOS10之后都不在适配IOS7了，其中包括了很多大公司，网易新闻，滴滴出行等。因此，我">
 
 
 
@@ -123,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="https://sunny110.github.io/categories/iOS/"/>
+  <link rel="canonical" href="https://sunny110.github.io/2017/03/12/WKWebView/"/>
 
 
 
 
 
-  <title> 分类: iOS | sunny110`s blog </title>
+  <title> UIWebView之进阶替换WKWebView | sunny110`s blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -154,7 +158,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -256,187 +260,228 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        iOS
-        <small>分类</small>
-      </h2>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/12/WKWebView/" itemprop="url">
-              
-                <span itemprop="name">UIWebView之进阶替换WKWebView</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-12T13:27:43+08:00"
-              content="2017-03-12" >
-          03-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/02/22/runloop/" itemprop="url">
-              
-                <span itemprop="name">RunLoop 简介</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-02-22T15:36:41+08:00"
-              content="2017-02-22" >
-          02-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/02/20/socket/" itemprop="url">
-              
-                <span itemprop="name">Socket入门及使用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-02-20T00:09:46+08:00"
-              content="2017-02-20" >
-          02-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/02/17/RAC2/" itemprop="url">
-              
-                <span itemprop="name">ReactiveCocoa进阶篇</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-02-17T18:02:24+08:00"
-              content="2017-02-17" >
-          02-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/12/20/RAC1/" itemprop="url">
-              
-                <span itemprop="name">ReactiveCocoa快速入门</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-12-20T20:18:24+08:00"
-              content="2016-12-20" >
-          12-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2016/03/11/runtime/" itemprop="url">
-              
-                <span itemprop="name">揭开runtime运行时的神秘面纱</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-03-11T17:18:24+08:00"
-              content="2016-03-11" >
-          03-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://sunny110.github.io/2017/03/12/WKWebView/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="sunny110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="sunny110`s blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="sunny110`s blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                UIWebView之进阶替换WKWebView
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-12T13:27:43+08:00">
+                2017-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">热度
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>℃
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>webView是我们日常开发中不可缺少的一个组件，通常我们都是使用UIWebView来实现，但是加载速度慢、占用内存多、优化困难等问题一直困扰着大家。如果加载网页多，还可能因为过量占用内存而给系统kill掉，各种优化的方法效果也不那么明显。</p>
+<p>Xcode8发布以后，编译器开始不支持IOS7，所以很多应用在适配IOS10之后都不在适配IOS7了，其中包括了很多大公司，网易新闻，滴滴出行等。因此，我们现在开发APP的时候基本就可以从iOS8开始适配，弃用UIWebView，用WKWebView来替换它。WKWebView有如下特点:</p>
+<ol>
+<li>在性能、稳定性、功能方面有很大提升（最直观的体现就是加载网页是占用的内存，模拟器加载百度与开源中国网站时，WKWebView占用23M，而UIWebView占用85M）；</li>
+<li>允许JavaScript的Nitro库加载并使用（UIWebView中限制）；</li>
+<li>支持了更多的HTML5特性；</li>
+<li>高达60fps的滚动刷新率以及内置手势；</li>
+<li>WKWebView增加了加载进度属性</li>
+<li>将UIWebViewDelegate与UIWebView重构成了14类与3个协议（查看苹果官方文档）<a href="https://developer.apple.com/reference/webkit" target="_blank" rel="external">查看苹果官方文档</a>；</li>
+</ol>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>WKWebView有两个delegate,WKUIDelegate 和 WKNavigationDelegate。WKNavigationDelegate主要处理一些跳转、加载处理操作，WKUIDelegate主要处理JS脚本，确认框，警告框等。因此WKNavigationDelegate更加常用。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>满分是100分的话，这篇文章你给几分</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/reward/reward_wechat.png" alt="sunny110 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/reward/reward_alipay.png" alt="sunny110 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/22/runloop/" rel="next" title="RunLoop 简介">
+                <i class="fa fa-chevron-left"></i> RunLoop 简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/03/12/WKWebView/"
+     data-title="UIWebView之进阶替换WKWebView"
+     data-content=""
+     data-url="https://sunny110.github.io/2017/03/12/WKWebView/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
 
           
           </div>
@@ -463,8 +508,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/avatar/avatar.png"
@@ -546,6 +600,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用"><span class="nav-number">2.</span> <span class="nav-text">基本使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -661,6 +731,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 

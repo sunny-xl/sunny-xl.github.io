@@ -268,6 +268,157 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://sunny110.github.io/2017/03/12/WKWebView/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="sunny110">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="sunny110`s blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="sunny110`s blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/12/WKWebView/" itemprop="url">
+                  UIWebView之进阶替换WKWebView
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-12T13:27:43+08:00">
+                2017-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>webView是我们日常开发中不可缺少的一个组件，通常我们都是使用UIWebView来实现，但是加载速度慢、占用内存多、优化困难等问题一直困扰着大家。如果加载网页多，还可能因为过量占用内存而给系统kill掉，各种优化的方法效果也不那么明显。</p>
+<p>Xcode8发布以后，编译器开始不支持IOS7，所以很多应用在适配IOS10之后都不在适配IOS7了，其中包括了很多大公司，网易新闻，滴滴出行等。因此，我们现在开发APP的时候基本就可以从iOS8开始适配，弃用UIWebView，用WKWebView来替换它。WKWebView有如下特点:</p>
+<ol>
+<li>在性能、稳定性、功能方面有很大提升（最直观的体现就是加载网页是占用的内存，模拟器加载百度与开源中国网站时，WKWebView占用23M，而UIWebView占用85M）；</li>
+<li>允许JavaScript的Nitro库加载并使用（UIWebView中限制）；</li>
+<li>支持了更多的HTML5特性；</li>
+<li>高达60fps的滚动刷新率以及内置手势；</li>
+<li>WKWebView增加了加载进度属性</li>
+<li>将UIWebViewDelegate与UIWebView重构成了14类与3个协议（查看苹果官方文档）<a href="https://developer.apple.com/reference/webkit" target="_blank" rel="external">查看苹果官方文档</a>；</li>
+</ol>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>WKWebView有两个delegate,WKUIDelegate 和 WKNavigationDelegate。WKNavigationDelegate主要处理一些跳转、加载处理操作，WKUIDelegate主要处理JS脚本，确认框，警告框等。因此WKNavigationDelegate更加常用。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://sunny110.github.io/2017/02/22/runloop/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1365,7 +1516,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
