@@ -5,12 +5,10 @@ comments: false
 ---
 
 # 联系方式
-Email: sunxuelin1017@gmail.com
-Weibo: http://weibo.com/sunny110_
+Email: sunny8316@foxmail.com
 
 # 基本信息
 毕业学校：河南师范大学
 
 学历：本科
 
-目前从事iOS开发

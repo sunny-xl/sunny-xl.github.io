@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: sunny110`s blog
+title: sunny-xl`s blog
 subtitle: 
 description: Stay Hungry,Stay Foolish
-author: sunny110
+author: sunny-xl
 language: zh-Hans
 timezone:
-email: sunxuelin1017@gmail.com
+email: sunny8316@foxmail.com
 
-# URL
+# URL SEO优化，
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://sunny110.github.io
+url: https://sunny-xl.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -70,9 +70,9 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git 
-  repository: https://github.com/sunny110/sunny110.github.io.git 
+  repository: https://github.com/sunny-xl/sunny-xl.github.io.git 
   branch: master
-  message: 'Daily updated：{{now("YYYY-MM-DD HH:mm:ss")}} by sunny110'
+  message: 'Daily updated：{{now("YYYY-MM-DD HH:mm:ss")}} by sunny-xl'
 
 # 自己添加的功能
 #1.头像
