@@ -1,0 +1,832 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="iOS,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="runtime简介 RunTime简称运行时。OC就是运行时机制，也就是在运行时候的一些机制，其中最主要的是消息机制。 对于C语言，函数的调用在编译的时候会决定调用哪个函数。 对于OC的函数，属于动态调用过程，在编译的时候并不能决定真正调用哪个函数，只有在真正运行的时候才会根据函数的名称找到对应的函数来调用。 事实证明： 在编译阶段，OC可以调用任何函数，即使这个函数并未实现，只要声明过就不会报错">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="揭开runtime运行时的神秘面纱">
+<meta property="og:url" content="https://sunny-xl.github.io/2016/03/11/2016-03-11runtime/index.html">
+<meta property="og:site_name" content="sunny-xl`s blog">
+<meta property="og:description" content="runtime简介 RunTime简称运行时。OC就是运行时机制，也就是在运行时候的一些机制，其中最主要的是消息机制。 对于C语言，函数的调用在编译的时候会决定调用哪个函数。 对于OC的函数，属于动态调用过程，在编译的时候并不能决定真正调用哪个函数，只有在真正运行的时候才会根据函数的名称找到对应的函数来调用。 事实证明： 在编译阶段，OC可以调用任何函数，即使这个函数并未实现，只要声明过就不会报错">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-04-05T11:31:10.571Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="揭开runtime运行时的神秘面纱">
+<meta name="twitter:description" content="runtime简介 RunTime简称运行时。OC就是运行时机制，也就是在运行时候的一些机制，其中最主要的是消息机制。 对于C语言，函数的调用在编译的时候会决定调用哪个函数。 对于OC的函数，属于动态调用过程，在编译的时候并不能决定真正调用哪个函数，只有在真正运行的时候才会根据函数的名称找到对应的函数来调用。 事实证明： 在编译阶段，OC可以调用任何函数，即使这个函数并未实现，只要声明过就不会报错">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sunny-xl.github.io/2016/03/11/2016-03-11runtime/">
+
+
+
+
+
+  <title> 揭开runtime运行时的神秘面纱 | sunny-xl`s blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">sunny-xl`s blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://sunny-xl.github.io/2016/03/11/2016-03-11runtime/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="sunny-xl">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="sunny-xl`s blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="sunny-xl`s blog" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                揭开runtime运行时的神秘面纱
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-03-11T17:18:24+08:00">
+                2016-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="runtime简介"><a href="#runtime简介" class="headerlink" title="runtime简介"></a>runtime简介</h2><ul>
+<li>RunTime简称运行时。OC就是<strong>运行时机制</strong>，也就是在运行时候的一些机制，其中最主要的是消息机制。</li>
+<li>对于C语言，<strong>函数的调用在编译的时候会决定调用哪个函数</strong>。</li>
+<li>对于OC的函数，属于<strong>动态调用</strong>过程，在编译的时候并不能决定真正调用哪个函数，只有在真正运行的时候才会根据函数的名称找到对应的函数来调用。</li>
+<li>事实证明：<ul>
+<li>在编译阶段，OC可以<strong>调用任何函数</strong>，即使这个函数并未实现，只要声明过就不会报错。</li>
+<li>在编译阶段，C语言调用<strong>未实现的函数</strong>就会报错。</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="runtime作用"><a href="#runtime作用" class="headerlink" title="runtime作用"></a>runtime作用</h2><h3 id="发送消息"><a href="#发送消息" class="headerlink" title="发送消息"></a>发送消息</h3><ul>
+<li>方法调用的本质，就是让对象发送消息。</li>
+<li><code>objc_msgSend</code>,只有对象才能发送消息，因此以objc开头.</li>
+<li>使用<strong>消息机制前提</strong>，必须导入<code>#import &lt;objc/message.h&gt;</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 创建person对象</span><br><span class="line">Person *p = [[Person alloc] init];</span><br><span class="line"></span><br><span class="line">// 调用对象方法</span><br><span class="line">[p eat];</span><br><span class="line"></span><br><span class="line">// 本质：让对象发送消息</span><br><span class="line">objc_msgSend(p, @selector(eat));</span><br><span class="line"></span><br><span class="line">// 调用类方法的方式：两种</span><br><span class="line">// 第一种通过类名调用</span><br><span class="line">[Person eat];</span><br><span class="line">// 第二种通过类对象调用</span><br><span class="line">[[Person class] eat];</span><br><span class="line"></span><br><span class="line">// 用类名调用类方法，底层会自动把类名转换成类对象调用</span><br><span class="line">// 本质：让类对象发送消息</span><br><span class="line">objc_msgSend([Person class], @selector(eat));</span><br></pre></td></tr></table></figure>
+<ul>
+<li>消息机制原理:对象根据方法编号SEL去映射表查找对应的方法实现</li>
+</ul>
+<h3 id="交换方法"><a href="#交换方法" class="headerlink" title="交换方法"></a>交换方法</h3><ul>
+<li>开发使用场景:系统自带的方法功能不够，给系统自带的方法扩展一些功能，并且保持原有的功能。</li>
+<li>方式一:继承系统的类，重写方法.</li>
+<li>方式二:使用runtime,交换方法.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    // 需求：给imageNamed方法提供功能，每次加载图片就判断下图片是否加载成功。</span><br><span class="line">    // 步骤一：先搞个分类，定义一个能加载图片并且能打印的方法+ (instancetype)imageWithName:(NSString *)name;</span><br><span class="line">    // 步骤二：交换imageNamed和imageWithName的实现，就能调用imageWithName，间接调用imageWithName的实现。</span><br><span class="line"></span><br><span class="line">    UIImage *image = [UIImage imageNamed:@&quot;123&quot;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation UIImage (Image)</span><br><span class="line">// 加载分类到内存的时候调用</span><br><span class="line">+ (void)load&#123;</span><br><span class="line">    // 交换方法</span><br><span class="line"></span><br><span class="line">    // 获取imageWithName方法地址</span><br><span class="line">    Method imageWithName = class_getClassMethod(self, @selector(imageWithName:));</span><br><span class="line"></span><br><span class="line">    // 获取imageWithName方法地址</span><br><span class="line">    Method imageName = class_getClassMethod(self, @selector(imageNamed:));</span><br><span class="line"></span><br><span class="line">    // 交换方法地址，相当于交换实现方式</span><br><span class="line">    method_exchangeImplementations(imageWithName, imageName);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 不能在分类中重写系统方法imageNamed，因为会把系统的功能给覆盖掉，而且分类中不能调用super.</span><br><span class="line"></span><br><span class="line">// 既能加载图片又能打印</span><br><span class="line">+ (instancetype)imageWithName:(NSString *)name&#123;</span><br><span class="line"></span><br><span class="line">    // 这里调用imageWithName，相当于调用imageName</span><br><span class="line">    UIImage *image = [self imageWithName:name];</span><br><span class="line"></span><br><span class="line">    if (image == nil) &#123;</span><br><span class="line">        NSLog(@&quot;加载空的图片&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return image;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h3 id="动态添加方法"><a href="#动态添加方法" class="headerlink" title="动态添加方法"></a>动态添加方法</h3><ul>
+<li>开发使用场景：如果一个类方法非常多，加载类到内存的时候也比较耗费资源，需要给每个方法生成映射表，可以使用动态给某个类，添加方法解决。</li>
+<li>经典面试题：有没有使用performSelector，其实主要想问你有没有动态添加过方法。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    Person *p = [[Person alloc] init];</span><br><span class="line"></span><br><span class="line">    // 默认person，没有实现eat方法，可以通过performSelector调用，但是会报错。</span><br><span class="line">    // 动态添加方法就不会报错</span><br><span class="line">    [p performSelector:@selector(eat)];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation Person</span><br><span class="line">// 默认方法都有两个隐式参数，</span><br><span class="line">void eat(id self,SEL sel)</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;%@ %@&quot;,self,NSStringFromSelector(sel));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 当一个对象调用未实现的方法，会调用这个方法处理,并且会把对应的方法列表传过来.</span><br><span class="line">// 刚好可以用来判断，未实现的方法是不是我们想要动态添加的方法</span><br><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel&#123;</span><br><span class="line"></span><br><span class="line">    if (sel == @selector(eat)) &#123;</span><br><span class="line">        // 动态添加eat方法</span><br><span class="line"></span><br><span class="line">        // 第一个参数：给哪个类添加方法</span><br><span class="line">        // 第二个参数：添加方法的方法编号</span><br><span class="line">        // 第三个参数：添加方法的函数实现（函数地址）</span><br><span class="line">        // 第四个参数：函数的类型，(返回值+参数类型) v:void @:对象-&gt;self :表示SEL-&gt;_cmd</span><br><span class="line">        class_addMethod(self, @selector(eat), eat, &quot;v@:&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return [super resolveInstanceMethod:sel];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h3 id="给分类添加属性"><a href="#给分类添加属性" class="headerlink" title="给分类添加属性"></a>给分类添加属性</h3><ul>
+<li>原理：给一个类声明属性，其实本质就是给这个类添加关联，并不是直接把这个值的内存空间添加到类存空间。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    // 给系统NSObject类动态添加属性name</span><br><span class="line"></span><br><span class="line">    NSObject *objc = [[NSObject alloc] init];</span><br><span class="line">    objc.name = @&quot;小码哥&quot;;</span><br><span class="line">    NSLog(@&quot;%@&quot;,objc.name);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 定义关联的key</span><br><span class="line">static const char *key = &quot;name&quot;;</span><br><span class="line"></span><br><span class="line">@implementation NSObject (Property)</span><br><span class="line"></span><br><span class="line">- (NSString *)name&#123;</span><br><span class="line">    // 根据关联的key，获取关联的值。</span><br><span class="line">    return objc_getAssociatedObject(self, key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setName:(NSString *)name&#123;</span><br><span class="line">    // 第一个参数：给哪个对象添加关联</span><br><span class="line">    // 第二个参数：关联的key，通过这个key获取</span><br><span class="line">    // 第三个参数：关联的value</span><br><span class="line">    // 第四个参数:关联的策略</span><br><span class="line">    objc_setAssociatedObject(self, key, name, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h3 id="字典转模型"><a href="#字典转模型" class="headerlink" title="字典转模型"></a>字典转模型</h3><ul>
+<li>设计模型：字典转模型的第一步<ul>
+<li>模型属性，通常需要跟字典中的key一一对应</li>
+<li>问题：一个一个的生成模型属性，很慢？</li>
+<li>需求：能不能自动根据一个字典，生成对应的属性。</li>
+<li>解决：提供一个分类，专门根据字典生成对应的属性字符串。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">@implementation NSObject (Log)</span><br><span class="line"></span><br><span class="line">// 自动打印属性字符串</span><br><span class="line">+ (void)resolveDict:(NSDictionary *)dict&#123;</span><br><span class="line"></span><br><span class="line">    // 拼接属性字符串代码</span><br><span class="line">    NSMutableString *strM = [NSMutableString string];</span><br><span class="line"></span><br><span class="line">    // 1.遍历字典，把字典中的所有key取出来，生成对应的属性代码</span><br><span class="line">    [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) &#123;</span><br><span class="line"></span><br><span class="line">        // 类型经常变，抽出来</span><br><span class="line">         NSString *type;</span><br><span class="line"></span><br><span class="line">        if ([obj isKindOfClass:NSClassFromString(@&quot;__NSCFString&quot;)]) &#123;</span><br><span class="line">            type = @&quot;NSString&quot;;</span><br><span class="line">        &#125;else if ([obj isKindOfClass:NSClassFromString(@&quot;__NSCFArray&quot;)])&#123;</span><br><span class="line">            type = @&quot;NSArray&quot;;</span><br><span class="line">        &#125;else if ([obj isKindOfClass:NSClassFromString(@&quot;__NSCFNumber&quot;)])&#123;</span><br><span class="line">            type = @&quot;int&quot;;</span><br><span class="line">        &#125;else if ([obj isKindOfClass:NSClassFromString(@&quot;__NSCFDictionary&quot;)])&#123;</span><br><span class="line">            type = @&quot;NSDictionary&quot;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        // 属性字符串</span><br><span class="line">        NSString *str;</span><br><span class="line">        if ([type containsString:@&quot;NS&quot;]) &#123;</span><br><span class="line">            str = [NSString stringWithFormat:@&quot;@property (nonatomic, strong) %@ *%@;&quot;,type,key];</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            str = [NSString stringWithFormat:@&quot;@property (nonatomic, assign) %@ %@;&quot;,type,key];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 每生成属性字符串，就自动换行。</span><br><span class="line">        [strM appendFormat:@&quot;\n%@\n&quot;,str];</span><br><span class="line"></span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    // 把拼接好的字符串打印出来，就好了。</span><br><span class="line">    NSLog(@&quot;%@&quot;,strM);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h4 id="字典转模型的方式一：KVC"><a href="#字典转模型的方式一：KVC" class="headerlink" title="字典转模型的方式一：KVC"></a>字典转模型的方式一：KVC</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@implementation Status</span><br><span class="line"></span><br><span class="line">+ (instancetype)statusWithDict:(NSDictionary *)dict&#123;</span><br><span class="line">    Status *status = [[self alloc] init];</span><br><span class="line"></span><br><span class="line">    [status setValuesForKeysWithDictionary:dict];</span><br><span class="line"></span><br><span class="line">    return status;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<ul>
+<li>KVC字典转模型弊端：必须保证，模型中的属性和字典中的key一一对应。<ul>
+<li>如果不一致，就会调用[<status 0x7fa74b545d60> setValue:forUndefinedKey:] 报key找不到的错。</status></li>
+<li>分析:模型中的属性和字典的key不一一对应，系统就会调用setValue:forUndefinedKey:报错。</li>
+<li>解决:重写对象的setValue:forUndefinedKey:,把系统的方法覆盖， 就能继续使用KVC，字典转模型了。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> - (void)setValue:(id)value forUndefinedKey:(NSString *)key&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="字典转模型的方式二：Runtime"><a href="#字典转模型的方式二：Runtime" class="headerlink" title="字典转模型的方式二：Runtime"></a>字典转模型的方式二：Runtime</h4><ul>
+<li>思路：利用运行时，遍历模型中所有属性，根据模型的属性名，去字典中查找key，取出对应的值，给模型的属性赋值。</li>
+<li>步骤：提供一个NSObject分类，专门字典转模型，以后所有模型都可以通过这个分类转。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    // 解析Plist文件</span><br><span class="line">    NSString *filePath = [[NSBundle mainBundle] pathForResource:@&quot;status.plist&quot; ofType:nil];</span><br><span class="line"></span><br><span class="line">    NSDictionary *statusDict = [NSDictionary dictionaryWithContentsOfFile:filePath];</span><br><span class="line"></span><br><span class="line">    // 获取字典数组</span><br><span class="line">    NSArray *dictArr = statusDict[@&quot;statuses&quot;];</span><br><span class="line"></span><br><span class="line">    // 自动生成模型的属性字符串</span><br><span class="line">//    [NSObject resolveDict:dictArr[0][@&quot;user&quot;]];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    _statuses = [NSMutableArray array];</span><br><span class="line"></span><br><span class="line">    // 遍历字典数组</span><br><span class="line">    for (NSDictionary *dict in dictArr) &#123;</span><br><span class="line"></span><br><span class="line">        Status *status = [Status modelWithDict:dict];</span><br><span class="line"></span><br><span class="line">        [_statuses addObject:status];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 测试数据</span><br><span class="line">    NSLog(@&quot;%@ %@&quot;,_statuses,[_statuses[0] user]);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation NSObject (Model)</span><br><span class="line"></span><br><span class="line">+ (instancetype)modelWithDict:(NSDictionary *)dict&#123;</span><br><span class="line">    // 思路：遍历模型中所有属性-》使用运行时</span><br><span class="line"></span><br><span class="line">    // 0.创建对应的对象</span><br><span class="line">    id objc = [[self alloc] init];</span><br><span class="line"></span><br><span class="line">    // 1.利用runtime给对象中的成员属性赋值</span><br><span class="line"></span><br><span class="line">    // class_copyIvarList:获取类中的所有成员属性</span><br><span class="line">    // Ivar：成员属性的意思</span><br><span class="line">    // 第一个参数：表示获取哪个类中的成员属性</span><br><span class="line">    // 第二个参数：表示这个类有多少成员属性，传入一个Int变量地址，会自动给这个变量赋值</span><br><span class="line">    // 返回值Ivar *：指的是一个ivar数组，会把所有成员属性放在一个数组中，通过返回的数组就能全部获取到。</span><br><span class="line">    /* 类似下面这种写法</span><br><span class="line"></span><br><span class="line">     Ivar ivar;</span><br><span class="line">     Ivar ivar1;</span><br><span class="line">     Ivar ivar2;</span><br><span class="line">     // 定义一个ivar的数组a</span><br><span class="line">     Ivar a[] = &#123;ivar,ivar1,ivar2&#125;;</span><br><span class="line"></span><br><span class="line">     // 用一个Ivar *指针指向数组第一个元素</span><br><span class="line">     Ivar *ivarList = a;</span><br><span class="line"></span><br><span class="line">     // 根据指针访问数组第一个元素</span><br><span class="line">     ivarList[0];</span><br><span class="line"></span><br><span class="line">     */</span><br><span class="line">    unsigned int count;</span><br><span class="line"></span><br><span class="line">    // 获取类中的所有成员属性</span><br><span class="line">    Ivar *ivarList = class_copyIvarList(self, &amp;count);</span><br><span class="line"></span><br><span class="line">    for (int i = 0; i &lt; count; i++) &#123;</span><br><span class="line">        // 根据角标，从数组取出对应的成员属性</span><br><span class="line">        Ivar ivar = ivarList[i];</span><br><span class="line"></span><br><span class="line">        // 获取成员属性名</span><br><span class="line">        NSString *name = [NSString stringWithUTF8String:ivar_getName(ivar)];</span><br><span class="line"></span><br><span class="line">        // 处理成员属性名-&gt;字典中的key</span><br><span class="line">        // 从第一个角标开始截取</span><br><span class="line">        NSString *key = [name substringFromIndex:1];</span><br><span class="line"></span><br><span class="line">        // 根据成员属性名去字典中查找对应的value</span><br><span class="line">        id value = dict[key];</span><br><span class="line"></span><br><span class="line">        // 二级转换:如果字典中还有字典，也需要把对应的字典转换成模型</span><br><span class="line">        // 判断下value是否是字典</span><br><span class="line">        if ([value isKindOfClass:[NSDictionary class]]) &#123;</span><br><span class="line">            // 字典转模型</span><br><span class="line">            // 获取模型的类对象，调用modelWithDict</span><br><span class="line">            // 模型的类名已知，就是成员属性的类型</span><br><span class="line"></span><br><span class="line">            // 获取成员属性类型</span><br><span class="line">           NSString *type = [NSString stringWithUTF8String:ivar_getTypeEncoding(ivar)];</span><br><span class="line">          // 生成的是这种@&quot;@\&quot;User\&quot;&quot; 类型 -》 @&quot;User&quot;  在OC字符串中 \&quot; -&gt; &quot;，\是转义的意思，不占用字符</span><br><span class="line">            // 裁剪类型字符串</span><br><span class="line">            NSRange range = [type rangeOfString:@&quot;\&quot;&quot;];</span><br><span class="line"></span><br><span class="line">           type = [type substringFromIndex:range.location + range.length];</span><br><span class="line"></span><br><span class="line">            range = [type rangeOfString:@&quot;\&quot;&quot;];</span><br><span class="line"></span><br><span class="line">            // 裁剪到哪个角标，不包括当前角标</span><br><span class="line">          type = [type substringToIndex:range.location];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            // 根据字符串类名生成类对象</span><br><span class="line">            Class modelClass = NSClassFromString(type);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            if (modelClass) &#123; // 有对应的模型才需要转</span><br><span class="line"></span><br><span class="line">                // 把字典转模型</span><br><span class="line">                value  =  [modelClass modelWithDict:value];</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 三级转换：NSArray中也是字典，把数组中的字典转换成模型.</span><br><span class="line">        // 判断值是否是数组</span><br><span class="line">        if ([value isKindOfClass:[NSArray class]]) &#123;</span><br><span class="line">            // 判断对应类有没有实现字典数组转模型数组的协议</span><br><span class="line">            if ([self respondsToSelector:@selector(arrayContainModelClass)]) &#123;</span><br><span class="line"></span><br><span class="line">                // 转换成id类型，就能调用任何对象的方法</span><br><span class="line">                id idSelf = self;</span><br><span class="line"></span><br><span class="line">                // 获取数组中字典对应的模型</span><br><span class="line">                NSString *type =  [idSelf arrayContainModelClass][key];</span><br><span class="line"></span><br><span class="line">                // 生成模型</span><br><span class="line">               Class classModel = NSClassFromString(type);</span><br><span class="line">                NSMutableArray *arrM = [NSMutableArray array];</span><br><span class="line">                // 遍历字典数组，生成模型数组</span><br><span class="line">                for (NSDictionary *dict in value) &#123;</span><br><span class="line">                    // 字典转模型</span><br><span class="line">                  id model =  [classModel modelWithDict:dict];</span><br><span class="line">                    [arrM addObject:model];</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                // 把模型数组赋值给value</span><br><span class="line">                value = arrM;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        if (value) &#123; // 有值，才需要给模型的属性赋值</span><br><span class="line">            // 利用KVC给模型中的属性赋值</span><br><span class="line">            [objc setValue:value forKey:key];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return objc;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>满分是100分的话，这篇文章你给几分</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/reward/reward_wechat.png" alt="sunny-xl WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/reward/reward_alipay.png" alt="sunny-xl Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/16/2016-01-16hexo-next/" rel="next" title="基于Github Pages 使用Hexo搭建个人博客">
+                <i class="fa fa-chevron-left"></i> 基于Github Pages 使用Hexo搭建个人博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/21/2017-02-21mvc-mvp-mvvm-cdd/" rel="prev" title="iOS 架构模式 - 简述 MVC, MVP, MVVM 和 VIPER (译)">
+                iOS 架构模式 - 简述 MVC, MVP, MVVM 和 VIPER (译) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/03/11/2016-03-11runtime/" data-title="揭开runtime运行时的神秘面纱" data-content data-url="https://sunny-xl.github.io/2016/03/11/2016-03-11runtime/">
+  <div class="ds-share-inline">
+    <ul class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/avatar/avatar.png" alt="sunny-xl">
+          <p class="site-author-name" itemprop="name">sunny-xl</p>
+          <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sunny-xl" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#runtime简介"><span class="nav-number">1.</span> <span class="nav-text">runtime简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runtime作用"><span class="nav-number">2.</span> <span class="nav-text">runtime作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发送消息"><span class="nav-number">2.1.</span> <span class="nav-text">发送消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换方法"><span class="nav-number">2.2.</span> <span class="nav-text">交换方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态添加方法"><span class="nav-number">2.3.</span> <span class="nav-text">动态添加方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给分类添加属性"><span class="nav-number">2.4.</span> <span class="nav-text">给分类添加属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字典转模型"><span class="nav-number">2.5.</span> <span class="nav-text">字典转模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字典转模型的方式一：KVC"><span class="nav-number">2.5.1.</span> <span class="nav-text">字典转模型的方式一：KVC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字典转模型的方式二：Runtime"><span class="nav-number">2.5.2.</span> <span class="nav-text">字典转模型的方式二：Runtime</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sunny-xl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sunny-xl"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+</body>
+</html>
