@@ -1,4 +1,3 @@
-## 我的个人博客：[https://sunny110.github.io](https://sunny110.github.io)，欢迎访问，共同进步
+### [https://sunny-xl.github.io](https://sunny-xl.github.io)
 
-## 静态博客搭建方法
-- [简书地址](https://www.jianshu.com/p/4304d9276dc4)
+搭建过程参考本人掘金文章[基于Github Pages 使用Hexo搭建个人博客](https://juejin.im/post/5db0ebadf265da4d1a4c8865)
