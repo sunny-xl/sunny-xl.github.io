@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="iOS,">
+  <meta name="keywords" content="前端,webpack,">
 
 
 
@@ -87,20 +87,18 @@
 
 
 
-<meta name="description" content="RunLoop基本概念一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的： 1234567function loop() &amp;#123;    initialize();    do &amp;#123;        var message = get_next_message();        process_m">
-<meta name="keywords" content="iOS">
+<meta name="description" content="introduce webpack 是现代 js 应用的模块打包器，它是非常可配置，但要明确以下四个概念。   Entrywebpack 构建一个你应用程序依赖的图，起点便是所谓的 erntry point。它告诉 wenpack 从哪开始并且按照依赖图去知道什么要打包。可以将此比作 contextual root or the first file to kick off your app.。T">
+<meta name="keywords" content="前端,webpack">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RunLoop 简介">
-<meta property="og:url" content="https://sunny-xl.github.io/2017/02/22/2017-02-22runloop/index.html">
+<meta property="og:title" content="webpack 初探">
+<meta property="og:url" content="https://sunny-xl.github.io/2018/03/06/2018-3-6-webpack/index.html">
 <meta property="og:site_name" content="sunny-xl`s blog">
-<meta property="og:description" content="RunLoop基本概念一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的： 1234567function loop() &amp;#123;    initialize();    do &amp;#123;        var message = get_next_message();        process_m">
+<meta property="og:description" content="introduce webpack 是现代 js 应用的模块打包器，它是非常可配置，但要明确以下四个概念。   Entrywebpack 构建一个你应用程序依赖的图，起点便是所谓的 erntry point。它告诉 wenpack 从哪开始并且按照依赖图去知道什么要打包。可以将此比作 contextual root or the first file to kick off your app.。T">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://sunny-xl.github.io/blogImages/runloop.png">
-<meta property="og:updated_time" content="2020-04-05T11:31:10.570Z">
+<meta property="og:updated_time" content="2021-05-14T14:45:04.155Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RunLoop 简介">
-<meta name="twitter:description" content="RunLoop基本概念一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的： 1234567function loop() &amp;#123;    initialize();    do &amp;#123;        var message = get_next_message();        process_m">
-<meta name="twitter:image" content="https://sunny-xl.github.io/blogImages/runloop.png">
+<meta name="twitter:title" content="webpack 初探">
+<meta name="twitter:description" content="introduce webpack 是现代 js 应用的模块打包器，它是非常可配置，但要明确以下四个概念。   Entrywebpack 构建一个你应用程序依赖的图，起点便是所谓的 erntry point。它告诉 wenpack 从哪开始并且按照依赖图去知道什么要打包。可以将此比作 contextual root or the first file to kick off your app.。T">
 
 
 
@@ -128,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://sunny-xl.github.io/2017/02/22/2017-02-22runloop/">
+  <link rel="canonical" href="https://sunny-xl.github.io/2018/03/06/2018-3-6-webpack/">
 
 
 
 
 
-  <title> RunLoop 简介 | sunny-xl`s blog </title>
+  <title> webpack 初探 | sunny-xl`s blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -271,7 +269,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://sunny-xl.github.io/2017/02/22/2017-02-22runloop/">
+  <link itemprop="mainEntityOfPage" href="https://sunny-xl.github.io/2018/03/06/2018-3-6-webpack/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="sunny-xl">
@@ -295,7 +293,7 @@
             
             
               
-                RunLoop 简介
+                webpack 初探
               
             
           </h2>
@@ -310,8 +308,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-22T15:36:41+08:00">
-                2017-02-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-06T19:40:24+08:00">
+                2018-03-06
               </time>
             
 
@@ -333,8 +331,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
                   </a>
                 </span>
 
@@ -366,85 +364,25 @@
       
 
       
-        <h2 id="RunLoop基本概念"><a href="#RunLoop基本概念" class="headerlink" title="RunLoop基本概念"></a>RunLoop基本概念</h2><p>一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑是这样的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function loop() &#123;</span><br><span class="line">    initialize();</span><br><span class="line">    do &#123;</span><br><span class="line">        var message = get_next_message();</span><br><span class="line">        process_message(message);</span><br><span class="line">    &#125; while (message != quit);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种模型通常被称作 <a href="https://en.wikipedia.org/wiki/Event_loop" target="_blank" rel="noopener">Event Loop</a>。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：<strong>如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒</strong>。</p>
-<p>所以，RunLoop 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息），函数返回。</p>
-<a id="more"></a>
-<p>OSX/iOS 系统中，提供了两个这样的对象：NSRunLoop 和 CFRunLoopRef。<br>CFRunLoopRef 是在 CoreFoundation 框架内的，它提供了纯 C 函数的 API，所有这些 API 都是线程安全的。<br>NSRunLoop 是基于 CFRunLoopRef 的封装，提供了面向对象的 API，但是这些 API 不是线程安全的。</p>
-<p>一张苹果官方文档的图，大体说明了 Runloop 的工作模式：</p>
-<p><img src="/blogImages/runloop.png" alt="RunLoop"></p>
-<h2 id="RunLoop基本作用"><a href="#RunLoop基本作用" class="headerlink" title="RunLoop基本作用"></a>RunLoop基本作用</h2><ul>
-<li>保持程序的持续运行,保持线程的持续运行，并接受用户输入</li>
-<li>处理App中的各种事件(比如触摸事件,定时器事件,Selector事件)</li>
-<li>调用解耦（Message Queue）</li>
-<li>节省CPU资源,提高程序性能:该做事时做事,该休息时休息</li>
-</ul>
-<h2 id="RunLoop与线程"><a href="#RunLoop与线程" class="headerlink" title="RunLoop与线程"></a>RunLoop与线程</h2><ul>
-<li>每个线程（包括主线程）都有一个对应的 RunLoop 对象</li>
-<li>我们并不能自己创建 RunLoop 对象，但是可以获取到系统提供的 RunLoop 对象。</li>
-<li>主线程的RunLoop默认是启动的，用于接收各种输入sources;其他线程的RunLoop默认是没有启动的，如果你需要更多的线程交互则可以手动配置和启动</li>
-<li>RunLoop在第一次获取时由系统自动创建,在线程结束时销毁</li>
-</ul>
-<h2 id="RunLoop使用场景"><a href="#RunLoop使用场景" class="headerlink" title="RunLoop使用场景"></a>RunLoop使用场景</h2><ul>
-<li>使用ports 或 input sources 和其他线程通信</li>
-<li>在线程中使用timer</li>
-<li>在<code>Cocoa</code>应用中使用<code>performSelector...</code>方法   // 应该是performSelector…这种方法会启动一个线程并启动run loop吧</li>
-<li>让线程执行一个周期性的任务   // 如果不启动run loop， 线程跑完就可能被系统释放了</li>
-</ul>
-<p>来源<a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html" target="_blank" rel="noopener">RunLoop官方文档</a></p>
-<h2 id="RunLoop运行模式"><a href="#RunLoop运行模式" class="headerlink" title="RunLoop运行模式"></a>RunLoop运行模式</h2><ul>
-<li>一个 RunLoop包含若干个Mode，每个Mode又包含若干个Source/Timer/Observer</li>
-<li>每次RunLoop启动时，只能指定其中一个Mode，这个Mode被称作 CurrentMode</li>
-<li>如果需要切换Mode，只能退出Loop，再重新指定一个Mode进入系统默认模式</li>
-</ul>
-<p>系统默认注册了5个Mode:</p>
-<ul>
-<li>NSDefaultRunLoopMode：App的默认Mode，通常主线程是在这个Mode下运行</li>
-<li>UITrackingRunLoopMode：界面跟踪Mode，用于ScrollView 追踪触摸滑动，保证界面滑动时不受其他 Mode 影响</li>
-<li>UIInitializationRunLoopMode:在刚启动App时第进入的第一个 Mode，启动完成后就不再使用</li>
-<li>GSEventReceiveRunLoopMode: 接受系统事件的内部 Mode，通常用不到</li>
-<li>NSRunLoopCommonModes:这是一个占位用的Mode，不是一种真正的Mode。可以看成模式组,默认情况下包括了NSDefaultRunLoopMode,UITrackingRunLoopMode)两种模式.</li>
-</ul>
-<h2 id="RunLoop应用"><a href="#RunLoop应用" class="headerlink" title="RunLoop应用"></a>RunLoop应用</h2><ul>
-<li><p>NSTimer</p>
-<ul>
-<li>需指定模式，若GCD则不用</li>
-</ul>
-</li>
-<li><p>ImageView显示</p>
-<ul>
-<li>在特定模式下执行某些操作，图片设置与拖拽分别在不同模式</li>
-</ul>
-</li>
-<li><p>PerformSelector</p>
-</li>
-<li><p>常驻线程</p>
-<ul>
-<li>某些操作，需要重复开辟子线程，重复开辟内存过于消耗性能，可以设定子线程常驻</li>
-</ul>
-</li>
-<li><p>自动释放池</p>
-<ul>
-<li>创建和释放<br>1.第一次创建, 是在runloop进入的时候创建，对应的状态 = kCFRunLoopEntry<br>2.最后一次释放, 是在runloop退出的时候 对应的状态 = kCFRunLoopExit<br>3.其它创建和释放</li>
-</ul>
-<p>每次睡觉的时候都会释放前自动释放池,然后再创建一个新的</p>
-</li>
-<li><p>可以添加Observer监听RunLoop的状态</p>
-<ul>
-<li>比如监听点击事件的处理（在所有点击事件之前做一些事情）</li>
-</ul>
-</li>
-</ul>
-<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
-<li>子线程RunLoop常驻</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 1.子线程的NSRunLoop需要手动创建</span><br><span class="line">  // 2.子线程的NSRunLoop需要手动开启</span><br><span class="line">  // 3.如果子线程的NSRunLoop没有设置source or timer, 那么子线程的NSRunLoop会立刻关闭</span><br><span class="line">  // 无含义，设置子线程为常住线程，让子线程不关闭</span><br><span class="line">  // [[NSRunLoop currentRunLoop] addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode];</span><br><span class="line"></span><br><span class="line">  NSTimer *timer = [NSTimer timerWithTimeInterval:5.0 target:self selector:@selector(test) userInfo:nil repeats:YES];</span><br><span class="line">  // 会添加到当前子线程</span><br><span class="line">  [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];</span><br><span class="line">  [[NSRunLoop currentRunLoop] run];</span><br></pre></td></tr></table></figure>
-<p>注意：</p>
+        <h2 id="introduce"><a href="#introduce" class="headerlink" title="introduce"></a>introduce</h2><blockquote>
+<p>webpack 是现代 js 应用的模块打包器，它是非常可配置，但要明确以下四个概念。</p>
+</blockquote>
 <ol>
-<li>NSRunLoop只会检查有没有source和timer, 没有就关闭, 不会检查observer</li>
-<li>主线程没有到期时间，子线程有</li>
+<li>Entry<br>webpack 构建一个你应用程序依赖的图，起点便是所谓的 erntry point。它告诉 wenpack 从哪开始并且<br>按照依赖图去知道什么要打包。可以将此比作 contextual root or the first file to kick off your app.。<br>The simplest example：</li>
 </ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//webpack.config.js</span><br><span class="line">module.exports=&#123;</span><br><span class="line">    entry:&apos;./path/to/my/entry/file.js&apos;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>Output<br>一旦打包好了资源，依然需要告诉 webpack 哪里打包应用程序，output 属性告诉 webpack 如何处理打包过的代码。<br>The simplest example：<br><code>//webpack.config.js module.exports={ entry:&#39;./path/to/my/entry/file.js&#39;， output: { path: path.resolve(__dirname, &#39;dist&#39;), filename: &#39;my-first-webpack.bundle.js&#39; } };</code><br>示例中用 output.filename 和 output.path 属性告诉 webpack 包名和将之 emit to 哪。</p>
+<a id="more"></a>
+</li>
+<li><p>Loaders<br>目的在于将所有项目中的资源作为 webpack 而非浏览器关心的。webpack 眼中一切(.css,.hmtl,.scss,.jpg,etc)<br>皆模块。但其只知道 js，而 Loaders 在 webpack 中将这些文件转化成依赖图中的模块。有两个目的在高水准要求上：<br>a.确定什么文件该被相应 loader 转换(test)，b：转换相应文件以加入到依赖图(use)。</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">  entry: &apos;./path/to/my/entry/file.js&apos;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &apos;dist&apos;),</span><br><span class="line">    filename: &apos;my-first-webpack.bundle.js&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;test: /\.(js|jsx)$/, use: &apos;babel-loader&apos;&#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>Plugins<br>因 loaders 仅基于每个文件转换，故 plugins 是最常用的对打包模块的 “compilations” or “chunks”执行操作和自定义功能等。<br>要用 plugin 需要用 require()且将其放入 plugins 数组。多数 plugins 可按需自定义<br>因可在配置中按不同目的多次使用，此时需要用 new 来构建它的一个实例。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">const HtmlWebpackPlugin = require(&apos;html-webpack-plugin&apos;); //installed via npm</span><br><span class="line">const webpack = require(&apos;webpack&apos;); //to access built-in plugins</span><br><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line"></span><br><span class="line">const config = &#123;</span><br><span class="line">  entry: &apos;./path/to/my/entry/file.js&apos;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &apos;dist&apos;),</span><br><span class="line">    filename: &apos;my-first-webpack.bundle.js&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;test: /\.(js|jsx)$/, use: &apos;babel-loader&apos;&#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    new webpack.optimize.UglifyJsPlugin(),</span><br><span class="line">    new HtmlWebpackPlugin(&#123;template: &apos;./src/index.html&apos;&#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports = config;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -489,7 +427,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS/" rel="tag"># iOS</a>
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
           
         </div>
       
@@ -502,8 +442,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/21/2017-02-21mvc-mvp-mvvm-cdd/" rel="next" title="iOS 架构模式 - 简述 MVC, MVP, MVVM 和 VIPER (译)">
-                <i class="fa fa-chevron-left"></i> iOS 架构模式 - 简述 MVC, MVP, MVVM 和 VIPER (译)
+              <a href="/2017/12/23/2017-12-23-vue/" rel="next" title="vue(2.0)全家桶 总结及源码分析">
+                <i class="fa fa-chevron-left"></i> vue(2.0)全家桶 总结及源码分析
               </a>
             
           </div>
@@ -512,8 +452,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/06/10/2017-06-10-http深入浅出/" rel="prev" title="http深入浅出">
-                http深入浅出 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/30/2018-03-30-微信小程序/" rel="prev" title="微信小程序">
+                微信小程序 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -529,7 +469,7 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/02/22/2017-02-22runloop/" data-title="RunLoop 简介" data-content data-url="https://sunny-xl.github.io/2017/02/22/2017-02-22runloop/">
+        <div class="ds-share flat" data-thread-key="2018/03/06/2018-3-6-webpack/" data-title="webpack 初探" data-content data-url="https://sunny-xl.github.io/2018/03/06/2018-3-6-webpack/">
   <div class="ds-share-inline">
     <ul class="ds-share-icons-16">
 
@@ -664,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RunLoop基本概念"><span class="nav-number">1.</span> <span class="nav-text">RunLoop基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RunLoop基本作用"><span class="nav-number">2.</span> <span class="nav-text">RunLoop基本作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RunLoop与线程"><span class="nav-number">3.</span> <span class="nav-text">RunLoop与线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RunLoop使用场景"><span class="nav-number">4.</span> <span class="nav-text">RunLoop使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RunLoop运行模式"><span class="nav-number">5.</span> <span class="nav-text">RunLoop运行模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RunLoop应用"><span class="nav-number">6.</span> <span class="nav-text">RunLoop应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意点"><span class="nav-number">6.1.</span> <span class="nav-text">注意点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduce"><span class="nav-number">1.</span> <span class="nav-text">introduce</span></a></li></ol></div>
             
 
           </div>

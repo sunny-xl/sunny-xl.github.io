@@ -567,6 +567,320 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://sunny-xl.github.io/2018/03/06/2018-3-6-webpack/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="sunny-xl">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="sunny-xl`s blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="sunny-xl`s blog" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/03/06/2018-3-6-webpack/" itemprop="url">
+                  webpack 初探
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-06T19:40:24+08:00">
+                2018-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="introduce"><a href="#introduce" class="headerlink" title="introduce"></a>introduce</h2><blockquote>
+<p>webpack 是现代 js 应用的模块打包器，它是非常可配置，但要明确以下四个概念。</p>
+</blockquote>
+<ol>
+<li>Entry<br>webpack 构建一个你应用程序依赖的图，起点便是所谓的 erntry point。它告诉 wenpack 从哪开始并且<br>按照依赖图去知道什么要打包。可以将此比作 contextual root or the first file to kick off your app.。<br>The simplest example：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//webpack.config.js</span><br><span class="line">module.exports=&#123;</span><br><span class="line">    entry:&apos;./path/to/my/entry/file.js&apos;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>Output<br>一旦打包好了资源，依然需要告诉 webpack 哪里打包应用程序，output 属性告诉 webpack 如何处理打包过的代码。<br>The simplest example：<br><code>//webpack.config.js module.exports={ entry:&#39;./path/to/my/entry/file.js&#39;， output: { path: path.resolve(__dirname, &#39;dist&#39;), filename: &#39;my-first-webpack.bundle.js&#39; } };</code><br>示例中用 output.filename 和 output.path 属性告诉 webpack 包名和将之 emit to 哪。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/06/2018-3-6-webpack/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </li></ol></div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://sunny-xl.github.io/2017/12/23/2017-12-23-vue/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="sunny-xl">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="sunny-xl`s blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="sunny-xl`s blog" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/12/23/2017-12-23-vue/" itemprop="url">
+                  vue(2.0)全家桶 总结及源码分析
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-23T00:00:00+08:00">
+                2017-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><blockquote>
+<p>Vue does not support IE8 and below</p>
+</blockquote>
+<ul>
+<li><p>Direct <code>&lt;script&gt;</code>Include</p>
+</li>
+<li><p>CDN:<a href="https://unpkg.com/vue" target="_blank" rel="noopener"> https://unpkg.com/vue</a></p>
+</li>
+<li><p>NPM</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install vue</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CLI</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --global vue-cli</span><br><span class="line"># create a new project using the &quot;webpack&quot; template</span><br><span class="line">$ vue init webpack my-project</span><br><span class="line"># install dependencies and go!</span><br><span class="line">$ cd my-project</span><br><span class="line">$ npm install</span><br><span class="line">$ npm run dev</span><br></pre></td></tr></table></figure>
+<h3 id="Runtime-Compiler-vs-Runtime-only"><a href="#Runtime-Compiler-vs-Runtime-only" class="headerlink" title="Runtime+Compiler vs. Runtime-only"></a>Runtime+Compiler vs. Runtime-only</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// this requires the compiler</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  template: `&lt;div&gt;&#123;&#123; hi &#125;&#125;&lt;/div&gt;`</span><br><span class="line">&#125;)</span><br><span class="line">// this does not</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  render (h) &#123;</span><br><span class="line">    return h(&apos;div&apos;, this.hi)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/23/2017-12-23-vue/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://sunny-xl.github.io/2017/06/10/2017-06-10-http深入浅出/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -632,8 +946,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/http/" itemprop="url" rel="index">
-                    <span itemprop="name">http</span>
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
                   </a>
                 </span>
 
@@ -1256,8 +1570,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/github/" itemprop="url" rel="index">
-                    <span itemprop="name">github</span>
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
                   </a>
                 </span>
 
@@ -1290,13 +1604,13 @@
 
       
         
-          <p>   从一个小白开始搭建个人博客，期间参考了不少博客，踩了无数坑才搭起来的，现在总结下，希望能帮助大家少踩点坑。</p>
+          <p>从一个小白开始搭建个人博客，期间参考了不少博客，踩了无数坑才搭起来的，现在总结下，希望能帮助大家少踩点坑。</p>
 <h2 id="整体流程："><a href="#整体流程：" class="headerlink" title="整体流程："></a>整体流程：</h2><ul>
 <li>1、配置环境，安装<a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a>、<a href="https://git-scm.com/" target="_blank" rel="noopener">git</a></li>
 <li>2、安装<a href="https://hexo.io/docs/" target="_blank" rel="noopener">hexo</a></li>
-<li>3、hexo本地配置，实现本地发布、预览</li>
+<li>3、hexo 本地配置，实现本地发布、预览</li>
 <li>4、关联<a href="https://github.com" target="_blank" rel="noopener">Github</a></li>
-<li>5、配置hexo的主题</li>
+<li>5、配置 hexo 的主题</li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1375,7 +1689,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1384,7 +1698,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1393,7 +1707,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1450,7 +1764,7 @@
         <div class="copyright">
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

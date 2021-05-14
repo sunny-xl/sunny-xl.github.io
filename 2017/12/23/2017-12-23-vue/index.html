@@ -1,0 +1,1256 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="前端,vue,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Installation Vue does not support IE8 and below   Direct &amp;lt;script&amp;gt;Include  CDN: https://unpkg.com/vue  NPM   1$ npm install vue  CLI  1234567$ npm install --global vue-cli# create a new project u">
+<meta name="keywords" content="前端,vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue(2.0)全家桶 总结及源码分析">
+<meta property="og:url" content="https://sunny-xl.github.io/2017/12/23/2017-12-23-vue/index.html">
+<meta property="og:site_name" content="sunny-xl`s blog">
+<meta property="og:description" content="Installation Vue does not support IE8 and below   Direct &amp;lt;script&amp;gt;Include  CDN: https://unpkg.com/vue  NPM   1$ npm install vue  CLI  1234567$ npm install --global vue-cli# create a new project u">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-05-14T14:41:53.196Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue(2.0)全家桶 总结及源码分析">
+<meta name="twitter:description" content="Installation Vue does not support IE8 and below   Direct &amp;lt;script&amp;gt;Include  CDN: https://unpkg.com/vue  NPM   1$ npm install vue  CLI  1234567$ npm install --global vue-cli# create a new project u">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://sunny-xl.github.io/2017/12/23/2017-12-23-vue/">
+
+
+
+
+
+  <title> vue(2.0)全家桶 总结及源码分析 | sunny-xl`s blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">sunny-xl`s blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://sunny-xl.github.io/2017/12/23/2017-12-23-vue/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="sunny-xl">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="sunny-xl`s blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="sunny-xl`s blog" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                vue(2.0)全家桶 总结及源码分析
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-23T00:00:00+08:00">
+                2017-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><blockquote>
+<p>Vue does not support IE8 and below</p>
+</blockquote>
+<ul>
+<li><p>Direct <code>&lt;script&gt;</code>Include</p>
+</li>
+<li><p>CDN:<a href="https://unpkg.com/vue" target="_blank" rel="noopener"> https://unpkg.com/vue</a></p>
+</li>
+<li><p>NPM</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install vue</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CLI</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --global vue-cli</span><br><span class="line"># create a new project using the &quot;webpack&quot; template</span><br><span class="line">$ vue init webpack my-project</span><br><span class="line"># install dependencies and go!</span><br><span class="line">$ cd my-project</span><br><span class="line">$ npm install</span><br><span class="line">$ npm run dev</span><br></pre></td></tr></table></figure>
+<h3 id="Runtime-Compiler-vs-Runtime-only"><a href="#Runtime-Compiler-vs-Runtime-only" class="headerlink" title="Runtime+Compiler vs. Runtime-only"></a>Runtime+Compiler vs. Runtime-only</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// this requires the compiler</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  template: `&lt;div&gt;&#123;&#123; hi &#125;&#125;&lt;/div&gt;`</span><br><span class="line">&#125;)</span><br><span class="line">// this does not</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  render (h) &#123;</span><br><span class="line">    return h(&apos;div&apos;, this.hi)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="Development-vs-Production-Mode"><a href="#Development-vs-Production-Mode" class="headerlink" title="Development vs. Production Mode"></a>Development vs. Production Mode</h3><blockquote>
+<p>开发/生产模式对于 UMD 构建是硬编码的：未缩小的文件用于开发，缩小的文件用于生产。<br>CommonJS 和 ES Module 构建是针对捆绑包的，因此我们不为它们提供缩减版本。 你将负责自己最终捆绑。<br>CommonJS 和 ES Module 构建还保存 process.env.NODE_ENV 的原始检查以确定它们应该运行的模式。<br>您应该使用适当的 bundler 配置来替换这些环境变量，以便控制 Vue 将运行的模式。替换 process.env .NODE_ENV 与字符串字面值也允许像 UglifyJS 这样的缩略器完全删除仅开发的代码块，减少最终文件大小。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//Using Webpack DefinePlugin</span><br><span class="line"> var webpack = require(&apos;webpack&apos;)</span><br><span class="line"> module.exports = &#123;</span><br><span class="line">   // ...</span><br><span class="line">   plugins: [</span><br><span class="line">     // ...</span><br><span class="line">     new webpack.DefinePlugin(&#123;</span><br><span class="line">       &apos;process.env&apos;: &#123;</span><br><span class="line">         NODE_ENV: JSON.stringify(&apos;production&apos;)</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;)</span><br><span class="line">   ]</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h3 id="What’s-Vue-js-Vue-is-a-progressive-framework-for-building-user-interfaces"><a href="#What’s-Vue-js-Vue-is-a-progressive-framework-for-building-user-interfaces" class="headerlink" title="What’s Vue.js:Vue is a progressive framework for building user interfaces."></a>What’s Vue.js:Vue is a progressive framework for building user interfaces.</h3><h3 id="Declarative-Rendering-声明式渲染"><a href="#Declarative-Rendering-声明式渲染" class="headerlink" title="Declarative Rendering 声明式渲染"></a>Declarative Rendering 声明式渲染</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">  &#123;&#123; message &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">//js</span><br><span class="line">var app = new Vue(&#123;</span><br><span class="line">  el: &apos;#app&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    message: &apos;Hello Vue!&apos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="Conditionals-and-Loops"><a href="#Conditionals-and-Loops" class="headerlink" title="Conditionals and Loops"></a>Conditionals and Loops</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;div id=&quot;app-3&quot;&gt;</span><br><span class="line">  &lt;p v-if=&quot;seen&quot;&gt;Now you see me&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div id=&quot;app-4&quot;&gt;</span><br><span class="line">  &lt;ol&gt;</span><br><span class="line">    &lt;li v-for=&quot;todo in todos&quot;&gt;</span><br><span class="line">      &#123;&#123; todo.text &#125;&#125;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">  &lt;/ol&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">//js</span><br><span class="line">var app3 = new Vue(&#123;</span><br><span class="line">  el: &apos;#app-3&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    seen: true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">var app4 = new Vue(&#123;</span><br><span class="line">  el: &apos;#app-4&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    todos: [</span><br><span class="line">      &#123; text: &apos;Learn JavaScript&apos; &#125;,</span><br><span class="line">      &#123; text: &apos;Learn Vue&apos; &#125;,</span><br><span class="line">      &#123; text: &apos;Build something awesome&apos; &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="Handling-User-Input"><a href="#Handling-User-Input" class="headerlink" title="Handling User Input"></a>Handling User Input</h3><blockquote>
+<p>To let users interact with your app, we can use the v-on directive to attach event<br>listeners that invoke methods on our Vue instances:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app-5&quot;&gt;</span><br><span class="line">  &lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;</span><br><span class="line">  &lt;button v-on:click=&quot;reverseMessage&quot;&gt;Reverse Message&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div id=&quot;app-6&quot;&gt;</span><br><span class="line">  &lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;</span><br><span class="line">  &lt;input v-model=&quot;message&quot;&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">//js</span><br><span class="line">var app5 = new Vue(&#123;</span><br><span class="line">  el: &apos;#app-5&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    message: &apos;Hello Vue.js!&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    reverseMessage: function () &#123;</span><br><span class="line">      this.message = this.message.split(&apos;&apos;).reverse().join(&apos;&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">var app6 = new Vue(&#123;</span><br><span class="line">  el: &apos;#app-6&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    message: &apos;Hello Vue!&apos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Composing-with-Components"><a href="#Composing-with-Components" class="headerlink" title="Composing with Components"></a>Composing with Components</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//js</span><br><span class="line">// Define a new component called todo-item</span><br><span class="line">Vue.component(&apos;todo-item&apos;, &#123;</span><br><span class="line">  template: &apos;&lt;li&gt;This is a todo&lt;/li&gt;&apos;</span><br><span class="line">&#125;)</span><br><span class="line">//html</span><br><span class="line">&lt;ol&gt;</span><br><span class="line">  &lt;!-- Create an instance of the todo-item component --&gt;</span><br><span class="line">  &lt;todo-item&gt;&lt;/todo-item&gt;</span><br><span class="line">&lt;/ol&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Relation to Custom Elements—区别</p>
+</blockquote>
+<ol>
+<li>Web Components Spec 一直是草案,而 Vue components 不依赖任何处理可以工作在任何浏览器(IE9 以上)<br>且可嵌入到原生 element。</li>
+<li>Vue 组件提供了在纯自定义元素中不可用的重要功能，最突出的是跨组件数据流，自定义事件通信和构建工具集成。</li>
+</ol>
+<h2 id="The-Vue-Instance"><a href="#The-Vue-Instance" class="headerlink" title="The Vue Instance"></a>The Vue Instance</h2><h3 id="Constructor"><a href="#Constructor" class="headerlink" title="Constructor"></a>Constructor</h3><blockquote>
+<p>Although not strictly associated with the MVVM pattern, Vue’s design was partly inspired by it.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var data = &#123; a: 1 &#125;</span><br><span class="line">var vm = new Vue(&#123;</span><br><span class="line">  el: &apos;#example&apos;,</span><br><span class="line">  data: data</span><br><span class="line">&#125;)</span><br><span class="line">vm.$data === data // -&gt; true</span><br><span class="line">vm.$el === document.getElementById(&apos;example&apos;) // -&gt; true</span><br><span class="line">// $watch is an instance method</span><br><span class="line">vm.$watch(&apos;a&apos;, function (newVal, oldVal) &#123;</span><br><span class="line">  // this callback will be called when `vm.a` changes</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="Instance-Lifecycle-Hooks"><a href="#Instance-Lifecycle-Hooks" class="headerlink" title="Instance Lifecycle Hooks"></a>Instance Lifecycle Hooks</h3><p>![<a href="http://vuejs.org/images/lifecycle.png][http://vuejs.org/images/lifecycle.png]" target="_blank" rel="noopener">http://vuejs.org/images/lifecycle.png][http://vuejs.org/images/lifecycle.png]</a></p>
+<h2 id="Template-Syntax"><a href="#Template-Syntax" class="headerlink" title="Template Syntax"></a>Template Syntax</h2><blockquote>
+<p>Vue.js uses an HTML-based template syntax that allows you to declaratively bind the rendered DOM<br>to the underlying Vue instance’s data. All Vue.js templates are valid HTML that can be parsed by<br>spec-compliant browsers and HTML parsers.<br>Under the hood, Vue compiles the templates into Virtual DOM render functions(虚拟 DOM 渲染函数).<br>Combined with the reactivity system, Vue is able to intelligently figure out the minimal amount of components to<br>re-render and apply the minimal amount of DOM manipulations when the app state changes.</p>
+</blockquote>
+<h3 id="Interpolations-插值"><a href="#Interpolations-插值" class="headerlink" title="Interpolations(插值)"></a>Interpolations(插值)</h3><ul>
+<li>Text:<code>&lt;span&gt;Message: &lt;/span&gt;</code></li>
+<li>Raw HTML:<code>&lt;div v-html=&quot;rawHtml&quot;&gt;&lt;/div&gt;</code></li>
+<li>Attributes:<code>&lt;div v-bind:id=&quot;dynamicId&quot;&gt;&lt;/div&gt;</code></li>
+<li>Using JS Expressions:<code>&lt;div v-bind:id=&quot;&#39;list-&#39; + id&quot;&gt;&lt;/div&gt;</code></li>
+</ul>
+<h3 id="Directions—Directives-are-special-attributes-with-the-v-prefix"><a href="#Directions—Directives-are-special-attributes-with-the-v-prefix" class="headerlink" title="Directions—Directives are special attributes with the v- prefix."></a>Directions—Directives are special attributes with the v- prefix.</h3><ul>
+<li>Arguments:Some directives can take an “argument”, denoted by a colon after the directive name.<br><code>&lt;a v-on:click=&quot;doSomething&quot;&gt;</code></li>
+<li>Modifiers: indicate that a directive should be bound in some special way.<br><code>&lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;&lt;/form&gt;</code></li>
+<li>Filters: apply common text formatting.</li>
+</ul>
+<blockquote>
+<p>Vue 2.x 过滤器只能在胡子插值和 v 绑定表达式（后者自 2.1.0 以来支持）内使用，因为过滤器主要设计用于文本转换目的。<br>对于其他指令中更复杂的数据变换，应该使用计算属性。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&#123;&#123; message | capitalize &#125;&#125;</span><br><span class="line">//js</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  // ...</span><br><span class="line">  filters: &#123;</span><br><span class="line">    capitalize: function (value) &#123;</span><br><span class="line">      if (!value) return &apos;&apos;</span><br><span class="line">      value = value.toString()</span><br><span class="line">      return value.charAt(0).toUpperCase() + value.slice(1)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Shorthands:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- full syntax --&gt;</span><br><span class="line">&lt;a v-bind:href=&quot;url&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;!-- shorthand --&gt;</span><br><span class="line">&lt;a :href=&quot;url&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;!-- full syntax --&gt;</span><br><span class="line">&lt;a v-on:click=&quot;doSomething&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;!-- shorthand --&gt;</span><br><span class="line">&lt;a @click=&quot;doSomething&quot;&gt;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Computed-Properties-and-Watchers"><a href="#Computed-Properties-and-Watchers" class="headerlink" title="Computed Properties and Watchers"></a>Computed Properties and Watchers</h2><h3 id="Computed-Properties"><a href="#Computed-Properties" class="headerlink" title="Computed Properties"></a>Computed Properties</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">   // a computed getter</span><br><span class="line">   reversedMessage: function () &#123;</span><br><span class="line">     // `this` points to the vm instance</span><br><span class="line">     return this.message.split(&apos;&apos;).reverse().join(&apos;&apos;)</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Computed Caching vs Methods: the computed properties are cached based on their dependencies</li>
+<li>Computed vs Watched Property:better to use a computed property</li>
+<li>Computed Setter:you can provide a setter when you need it:</li>
+</ul>
+<h3 id="Watchers"><a href="#Watchers" class="headerlink" title="Watchers"></a>Watchers</h3><blockquote>
+<p>when you want to perform asynchronous or expensive operations in response to changing data.</p>
+</blockquote>
+<h2 id="Class-and-Style-Bindings"><a href="#Class-and-Style-Bindings" class="headerlink" title="Class and Style Bindings"></a>Class and Style Bindings</h2><h3 id="Binding-HTML-Classes"><a href="#Binding-HTML-Classes" class="headerlink" title="Binding HTML Classes"></a>Binding HTML Classes</h3><ul>
+<li>Object Syntax</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:class=&quot;&#123; active: isActive &#125;&quot;&gt;&lt;/div&gt;</span><br><span class="line"> &lt;div class=&quot;static&quot;</span><br><span class="line">      v-bind:class=&quot;&#123; active: isActive, &apos;text-danger&apos;: hasError &#125;&quot;&gt;</span><br><span class="line"> &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Array Syntax</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:class=&quot;[activeClass, errorClass]&quot;&gt;</span><br><span class="line">&lt;div v-bind:class=&quot;[isActive ? activeClass : &apos;&apos;, errorClass]&quot;&gt;</span><br><span class="line">&lt;div v-bind:class=&quot;[&#123; active: isActive &#125;, errorClass]&quot;&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>With Components</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-component v-bind:class=&quot;&#123; active: isActive &#125;&quot;&gt;&lt;/my-component&gt;</span><br><span class="line">//When isActive is truthy, the rendered HTML will be:</span><br><span class="line">&lt;p class=&quot;foo bar active&quot;&gt;Hi&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Binding-Inline-Styles"><a href="#Binding-Inline-Styles" class="headerlink" title="Binding Inline Styles"></a>Binding Inline Styles</h3><ul>
+<li>Object Syntax/Array Syntax</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:style=&quot;&#123; color: activeColor, fontSize: fontSize + &apos;px&apos; &#125;&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div v-bind:style=&quot;[baseStyles, overridingStyles]&quot;&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Auto-prefixing:Vue 已替你考虑 CSS 的浏览器兼容性</li>
+</ul>
+<h2 id="List-Rending"><a href="#List-Rending" class="headerlink" title="List Rending"></a>List Rending</h2><h3 id="v-if-v-else-if"><a href="#v-if-v-else-if" class="headerlink" title="v-if/v-else-if"></a>v-if/v-else-if</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-if=&quot;type === &apos;A&apos;&quot;&gt;</span><br><span class="line">  A</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div v-else-if=&quot;type === &apos;B&apos;&quot;&gt;</span><br><span class="line">  B</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div v-else-if=&quot;type === &apos;C&apos;&quot;&gt;</span><br><span class="line">  C</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div v-else&gt;</span><br><span class="line">  Not A/B/C</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Controlling Reusable Elements with key</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;template v-if=&quot;loginType === &apos;username&apos;&quot;&gt;</span><br><span class="line">  &lt;label&gt;Username&lt;/label&gt;</span><br><span class="line">  &lt;input placeholder=&quot;Enter your username&quot;&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;template v-else&gt;</span><br><span class="line">  &lt;label&gt;Email&lt;/label&gt;</span><br><span class="line">  &lt;input placeholder=&quot;Enter your email address&quot;&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>v-show <code>&lt;h1 v-show=&quot;ok&quot;&gt;Hello!&lt;/h1&gt;</code></p>
+</li>
+<li><p>v-if vs v-show</p>
+</li>
+</ul>
+<p>v-if is “real” conditional rendering because it ensures that event listeners and child components inside the<br>conditional block are properly destroyed and re-created during toggles.</p>
+<p>v-if is also lazy: if the condition is false on initial render, it will not do anything - the conditional block won’t<br>be rendered until the condition becomes true for the first time.</p>
+<p>In comparison, v-show is much simpler - the element is always rendered regardless of initial condition,<br>with just simple CSS-based toggling.And Please note that v-show doesn’t support the <code>&lt;template&gt;</code>syntax,<br>nor does it work with v-else</p>
+<p>Generally speaking, v-if has higher toggle costs while v-show has higher initial render costs. So prefer v-show if<br>you need to toggle something very often, and prefer v-if if the condition is unlikely to change at runtime.</p>
+<ul>
+<li>v-if vs v-show:v-for has a higher priority than v-if</li>
+</ul>
+<h2 id="List-Rendering"><a href="#List-Rendering" class="headerlink" title="List Rendering"></a>List Rendering</h2><h3 id="v-for-We-can-use-the-v-for-directive-to-render-a-list-of-items-based-on-an-array"><a href="#v-for-We-can-use-the-v-for-directive-to-render-a-list-of-items-based-on-an-array" class="headerlink" title="v-for:We can use the v-for directive to render a list of items based on an array."></a>v-for:We can use the v-for directive to render a list of items based on an array.</h3><ul>
+<li>Basic use</li>
+</ul>
+<blockquote>
+<p>You can also use of as the delimiter instead of in, so that it is closer to JavaScript’s syntax for iterators:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;ul id=&quot;example-1&quot;&gt;</span><br><span class="line">  &lt;li v-for=&quot;item of items&quot;&gt;</span><br><span class="line">    &#123;&#123; item.message &#125;&#125;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">&lt;ul id=&quot;example-2&quot;&gt;</span><br><span class="line">  &lt;li v-for=&quot;(item, index) in items&quot;&gt;</span><br><span class="line">    &#123;&#123; parentMessage &#125;&#125; - &#123;&#123; index &#125;&#125; - &#123;&#123; item.message &#125;&#125;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">//js</span><br><span class="line">var example1 = new Vue(&#123;</span><br><span class="line">  el: &apos;#example-1&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    items: [</span><br><span class="line">      &#123; message: &apos;Foo&apos; &#125;,</span><br><span class="line">      &#123; message: &apos;Bar&apos; &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">var example2 = new Vue(&#123;</span><br><span class="line">  el: &apos;#example-2&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    parentMessage: &apos;Parent&apos;,</span><br><span class="line">    items: [</span><br><span class="line">      &#123; message: &apos;Foo&apos; &#125;,</span><br><span class="line">      &#123; message: &apos;Bar&apos; &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Template v-for:<code>&lt;template v-for=&quot;item in items&quot;&gt;</code></p>
+</li>
+<li><p>Object v-for:</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-for=&quot;value in object&quot;&gt;</span><br><span class="line">//You can also provide a second argument for the key:</span><br><span class="line">&lt;div v-for=&quot;(value, key) in object&quot;&gt;</span><br><span class="line">//And another for the index:</span><br><span class="line">&lt;div v-for=&quot;(value, key, index) in object&quot;&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>When iterating over an object, the order is based on the key enumeration order of Object.keys()</p>
+</blockquote>
+<p>不保证所有 JS 引擎里边都表现一致。</p>
+<ul>
+<li>Range v-for:<code>&lt;span v-for=&quot;n in 10&quot;&gt;&lt;/span&gt;</code></li>
+<li>Components and v-for:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-component</span><br><span class="line">  v-for=&quot;(item, index) in items&quot;</span><br><span class="line">  v-bind:item=&quot;item&quot;</span><br><span class="line">  v-bind:index=&quot;index&quot;</span><br><span class="line">  v-bind:key=&quot;item.id&quot;&gt;</span><br><span class="line">&lt;/my-component&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>In 2.2.0+, when using v-for with a component, a key is now required.It is recommended to provide a key with v-for whenever possible</p>
+</blockquote>
+<h3 id="Array-Change-Detection"><a href="#Array-Change-Detection" class="headerlink" title="Array Change Detection"></a>Array Change Detection</h3><ul>
+<li>Mutation Methods:突变方法<ul>
+<li>push()</li>
+<li>pop()</li>
+<li>shift()</li>
+<li>unshift()</li>
+<li>splice()</li>
+<li>sort()</li>
+<li>reverse()</li>
+</ul>
+</li>
+<li>Replacing an Array: do not mutate the original array but always return a new array<ul>
+<li>filter()</li>
+<li>concat()</li>
+<li>slice()</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">example1.items = example1.items.filter(function (item) &#123;</span><br><span class="line">  return item.message.match(/Foo/)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Caveats:Due to limitations in JavaScript, Vue cannot detect the following changes to an array:<ul>
+<li>When you directly set an item with the index, e.g. vm.items[indexOfItem] = newValue</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Vue.set</span><br><span class="line">Vue.set(example1.items, indexOfItem, newValue)</span><br><span class="line">// Array.prototype.splice`</span><br><span class="line">example1.items.splice(indexOfItem, 1, newValue)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>When you modify the length of the array, e.g. vm.items.length = newLength</li>
+</ul>
+<p><code>example1.items.splice(newLength)</code></p>
+<h3 id="Displaying-Filtered-Sorted-Results"><a href="#Displaying-Filtered-Sorted-Results" class="headerlink" title="Displaying Filtered/Sorted Results"></a>Displaying Filtered/Sorted Results</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//create a computed property</span><br><span class="line">&lt;li v-for=&quot;n in evenNumbers&quot;&gt;&#123;&#123; n &#125;&#125;&lt;/li&gt;</span><br><span class="line">// use a method where computed properties are not feasible (e.g. inside nested v-for loops):</span><br><span class="line">&lt;li v-for=&quot;n in even(numbers)&quot;&gt;&#123;&#123; n &#125;&#125;&lt;/li&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Event-Handing"><a href="#Event-Handing" class="headerlink" title="Event Handing"></a>Event Handing</h2><h3 id="Listening-to-Events-use-the-v-on-directive"><a href="#Listening-to-Events-use-the-v-on-directive" class="headerlink" title="Listening to Events:use the v-on directive"></a>Listening to Events:use the v-on directive</h3><p><code>&lt;button v-on:click=&quot;counter += 1&quot;&gt;Add 1&lt;/button&gt;</code></p>
+<h3 id="Method-Event-Handlers-when-event-handlers-are-more-complex"><a href="#Method-Event-Handlers-when-event-handlers-are-more-complex" class="headerlink" title="Method Event Handlers:when event handlers are more complex"></a>Method Event Handlers:when event handlers are more complex</h3><p><code>&lt;button v-on:click=&quot;counter += 1&quot;&gt;Add 1&lt;/button&gt;</code></p>
+<h3 id="Methods-in-Inline-Handlers"><a href="#Methods-in-Inline-Handlers" class="headerlink" title="Methods in Inline Handlers"></a>Methods in Inline Handlers</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;button v-on:click=&quot;say(&apos;hi&apos;)&quot;&gt;Say hi&lt;/button&gt;</span><br><span class="line">//Sometimes we also need to access the original DOM event in an inline statement handler.</span><br><span class="line">&lt;button v-on:click=&quot;warn(&apos;Form cannot be submitted yet.&apos;, $event)&quot;&gt;Submit&lt;/button&gt;</span><br><span class="line">//js</span><br><span class="line">methods: &#123;</span><br><span class="line">  warn: function (message, event) &#123;</span><br><span class="line">    // now we have access to the native event</span><br><span class="line">    if (event) event.preventDefault()</span><br><span class="line">    alert(message)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Event-Modifiers-To-address-the-problem-of-purely-dealing-with-data-logic-rather-than-DOM-event-details"><a href="#Event-Modifiers-To-address-the-problem-of-purely-dealing-with-data-logic-rather-than-DOM-event-details" class="headerlink" title="Event Modifiers:To address the problem of purely dealing with data logic rather than DOM event details"></a>Event Modifiers:To address the problem of purely dealing with data logic rather than DOM event details</h3><ul>
+<li>.stop</li>
+<li>.prevent</li>
+<li>.capture</li>
+<li>.self</li>
+<li>.once:New in 2.1.4</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- the click event&apos;s propagation will be stopped --&gt;</span><br><span class="line">&lt;a v-on:click.stop=&quot;doThis&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;!-- the submit event will no longer reload the page --&gt;</span><br><span class="line">&lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;&lt;/form&gt;</span><br><span class="line">&lt;!-- modifiers can be chained --&gt;</span><br><span class="line">&lt;a v-on:click.stop.prevent=&quot;doThat&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;!-- just the modifier --&gt;</span><br><span class="line">&lt;form v-on:submit.prevent&gt;&lt;/form&gt;</span><br><span class="line">&lt;!-- use capture mode when adding the event listener --&gt;</span><br><span class="line">&lt;div v-on:click.capture=&quot;doThis&quot;&gt;...&lt;/div&gt;</span><br><span class="line">&lt;!-- only trigger handler if event.target is the element itself --&gt;</span><br><span class="line">&lt;!-- i.e. not from a child element --&gt;</span><br><span class="line">&lt;div v-on:click.self=&quot;doThat&quot;&gt;...&lt;/div&gt;</span><br><span class="line">&lt;!-- the click event will be triggered at most once --&gt;</span><br><span class="line">&lt;a v-on:click.once=&quot;doThis&quot;&gt;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Key-Modifiers-Modifier-Keys"><a href="#Key-Modifiers-Modifier-Keys" class="headerlink" title="Key Modifiers/Modifier Keys"></a>Key Modifiers/Modifier Keys</h3><h2 id="Form-Input-Bindings"><a href="#Form-Input-Bindings" class="headerlink" title="Form Input Bindings"></a>Form Input Bindings</h2><h3 id="Basic-Usage"><a href="#Basic-Usage" class="headerlink" title="Basic Usage"></a>Basic Usage</h3><ul>
+<li>Text <code>&lt;input v-model=&quot;message&quot; placeholder=&quot;edit me&quot;&gt;</code></li>
+<li>Multiline text</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//Interpolation on textareas (&lt;textarea&gt;&#123;&#123;text&#125;&#125;&lt;/textarea&gt;) won&apos;t work. Use v-model instead.</span><br><span class="line">&lt;textarea v-model=&quot;message&quot; placeholder=&quot;add multiple lines&quot;&gt;&lt;/textarea&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Checkbox <code>&lt;input type=&quot;checkbox&quot; id=&quot;checkbox&quot; v-model=&quot;checked&quot;&gt;</code></li>
+<li>Radio <code>&lt;input type=&quot;radio&quot; id=&quot;one&quot; v-model=&quot;picked&quot;&gt;</code></li>
+<li>Select:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//Single select</span><br><span class="line">&lt;select v-model=&quot;selected&quot;&gt;</span><br><span class="line">//Multiple select</span><br><span class="line">&lt;select v-model=&quot;selected&quot; multiple&gt;</span><br><span class="line">&lt;option v-for=&quot;option in options&quot; v-bind:value=&quot;option.value&quot;&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Value-Bindings"><a href="#Value-Bindings" class="headerlink" title="Value Bindings"></a>Value Bindings</h3><blockquote>
+<p>For radio, checkbox and select options, the v-model binding values are usually static strings (or booleans for checkbox):<br>We can use v-bind to bind the value to a dynamic property on the Vue instance.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- `picked` is a string &quot;a&quot; when checked --&gt;</span><br><span class="line">&lt;input type=&quot;radio&quot; v-model=&quot;picked&quot; value=&quot;a&quot;&gt;</span><br><span class="line">&lt;!-- `toggle` is either true or false --&gt;</span><br><span class="line">&lt;input type=&quot;checkbox&quot; v-model=&quot;toggle&quot;&gt;</span><br><span class="line">&lt;!-- `selected` is a string &quot;abc&quot; when selected --&gt;</span><br><span class="line">&lt;select v-model=&quot;selected&quot;&gt;</span><br><span class="line">&lt;option value=&quot;abc&quot;&gt;ABC&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;</span><br><span class="line"></span><br><span class="line">&lt;input</span><br><span class="line">type=&quot;checkbox&quot;</span><br><span class="line">v-model=&quot;toggle&quot;</span><br><span class="line">v-bind:true-value=&quot;a&quot;</span><br><span class="line">v-bind:false-value=&quot;b&quot;</span><br><span class="line">&gt;</span><br><span class="line">// when checked:</span><br><span class="line">vm.toggle === vm.a</span><br><span class="line">// when unchecked:</span><br><span class="line">vm.toggle === vm.b</span><br></pre></td></tr></table></figure>
+<h3 id="Modifiers"><a href="#Modifiers" class="headerlink" title="Modifiers"></a>Modifiers</h3><ul>
+<li>.lazy<code>&lt;input v-model.lazy=&quot;msg&quot; &gt;</code></li>
+<li>.number <code>&lt;input v-model.number=&quot;age&quot; type=&quot;number&quot;&gt;</code></li>
+<li>.trim <code>&lt;input v-model.trim=&quot;msg&quot;&gt;</code></li>
+</ul>
+<h3 id="v-model-with-Components"><a href="#v-model-with-Components" class="headerlink" title="v-model with Components"></a>v-model with Components</h3><h2 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h2><h3 id="Using-Components"><a href="#Using-Components" class="headerlink" title="Using Components"></a>Using Components</h3><ul>
+<li>Registration</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&apos;my-component&apos;, &#123;</span><br><span class="line">  // options</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Local Registration</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var Child = &#123;</span><br><span class="line">  template: &apos;&lt;div&gt;A custom component!&lt;/div&gt;&apos;</span><br><span class="line">&#125;</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  // ...</span><br><span class="line">  components: &#123;</span><br><span class="line">    // &lt;my-component&gt; will only be available in parent&apos;s template</span><br><span class="line">    &apos;my-component&apos;: Child</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>DOM Template Parsing Caveats</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//A workaround is to use the is special attribute:</span><br><span class="line">&lt;table&gt;</span><br><span class="line">  &lt;tr is=&quot;my-row&quot;&gt;&lt;/tr&gt;</span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>data Must Be a Function</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data: function () &#123;</span><br><span class="line">    return data</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Composing Components</li>
+</ul>
+<p>![<a href="http://vuejs.org/images/props-events.png][http://vuejs.org/images/props-events.png]" target="_blank" rel="noopener">http://vuejs.org/images/props-events.png][http://vuejs.org/images/props-events.png]</a></p>
+<h3 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h3><ul>
+<li>Passing Data with Props</li>
+</ul>
+<blockquote>
+<p>Every component instance has its own isolated scope. Data can be passed down to child components using props.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;child message=&quot;hello!&quot;&gt;&lt;/child&gt;</span><br><span class="line">//js</span><br><span class="line">Vue.component(&apos;child&apos;, &#123;</span><br><span class="line">  // declare the props</span><br><span class="line">  props: [&apos;message&apos;],</span><br><span class="line">  // just like data, the prop can be used inside templates</span><br><span class="line">  // and is also made available in the vm as this.message</span><br><span class="line">  template: &apos;&lt;span&gt;&#123;&#123; message &#125;&#125;&lt;/span&gt;&apos;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Dynamic Props</li>
+</ul>
+<p><code>&lt;child :my-message=&quot;parentMsg&quot;&gt;&lt;/child&gt;</code></p>
+<ul>
+<li>Literal vs Dynamic</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//初学者常犯的错误是试图利用仔面了语法传值。</span><br><span class="line">&lt;!-- this passes down a plain string &quot;1&quot; --&gt;</span><br><span class="line">&lt;comp some-prop=&quot;1&quot;&gt;&lt;/comp&gt;</span><br><span class="line">//事实上，若想传值我们需要用v-bind以便值被认定为JS表达式</span><br><span class="line">&lt;!-- this passes down an actual number --&gt;</span><br><span class="line">&lt;comp v-bind:some-prop=&quot;1&quot;&gt;&lt;/comp&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>One-Way Data Flow</li>
+</ul>
+<blockquote>
+<p>注意对象和数组在 JS 中是按引用传递的，故当 prop 是对象或数组时改变子组件数据会影响父组件状态</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/*1. Define a local data property that uses the prop’s initial value as its initial value:</span><br><span class="line">定义一个利用props值作为初始值的本地数据属性*/</span><br><span class="line">props: [&apos;initialCounter&apos;],</span><br><span class="line">data: function () &#123;</span><br><span class="line">  return &#123; counter: this.initialCounter &#125;</span><br><span class="line">&#125;</span><br><span class="line">/*2.Define a computed property that is computed from the prop’s value:</span><br><span class="line">定义一个将props值计算过的计算属性</span><br><span class="line">*/</span><br><span class="line">props: [&apos;size&apos;],</span><br><span class="line">computed: &#123;</span><br><span class="line">  normalizedSize: function () &#123;</span><br><span class="line">    return this.size.trim().toLowerCase()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Prop Validation</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&apos;example&apos;, &#123;</span><br><span class="line">  props: &#123;</span><br><span class="line">    // basic type check (`null` means accept any type)</span><br><span class="line">    propA: Number,</span><br><span class="line">    // multiple possible types</span><br><span class="line">    propB: [String, Number],</span><br><span class="line">    // a required string</span><br><span class="line">    propC: &#123;</span><br><span class="line">      type: String,</span><br><span class="line">      required: true</span><br><span class="line">    &#125;,</span><br><span class="line">    // a number with default value</span><br><span class="line">    propD: &#123;</span><br><span class="line">      type: Number,</span><br><span class="line">      default: 100</span><br><span class="line">    &#125;,</span><br><span class="line">    // object/array defaults should be returned from a</span><br><span class="line">    // factory function</span><br><span class="line">    propE: &#123;</span><br><span class="line">      type: Object,</span><br><span class="line">      default: function () &#123;</span><br><span class="line">        return &#123; message: &apos;hello&apos; &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    // custom validator function</span><br><span class="line">    propF: &#123;</span><br><span class="line">      validator: function (value) &#123;</span><br><span class="line">        return value &gt; 10</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="Custom-Events"><a href="#Custom-Events" class="headerlink" title="Custom Events"></a>Custom Events</h3><blockquote>
+<p>父组件可以像子组件单向传递数据，反之呢？此即 custom events 应用之处。<br>注意事件系统，Vue 的独立于浏览器的即便看起来很像；不能利用$on 监听子组件事件分发，必须在 template 上直接用<br>v-on，见如下实例</p>
+</blockquote>
+<ul>
+<li>Using v-on with Custom Events<ul>
+<li>Listen to an event using $on(eventName)</li>
+<li>Trigger an event using $emit(eventName)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;counter-event-example&quot;&gt;</span><br><span class="line">  &lt;p&gt;&#123;&#123; total &#125;&#125;&lt;/p&gt;</span><br><span class="line">  &lt;button-counter v-on:increment=&quot;incrementTotal&quot;&gt;&lt;/button-counter&gt;</span><br><span class="line">  &lt;button-counter v-on:increment=&quot;incrementTotal&quot;&gt;&lt;/button-counter&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">//js</span><br><span class="line">Vue.component(&apos;button-counter&apos;, &#123;</span><br><span class="line">  template: &apos;&lt;button v-on:click=&quot;increment&quot;&gt;&#123;&#123; counter &#125;&#125;&lt;/button&gt;&apos;,</span><br><span class="line">  data: function () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      counter: 0</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    increment: function () &#123;</span><br><span class="line">      this.counter += 1</span><br><span class="line">      this.$emit(&apos;increment&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#counter-event-example&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    total: 0</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    incrementTotal: function () &#123;</span><br><span class="line">      this.total += 1</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Binding Native Events to Components</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-component v-on:click.native=&quot;doTheThing&quot;&gt;&lt;/my-component&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Form Input Components using Custom Events</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-model=&quot;something&quot;&gt;</span><br><span class="line">//is just syntactic sugar for:</span><br><span class="line">&lt;input</span><br><span class="line">  v-bind:value=&quot;something&quot;</span><br><span class="line">  v-on:input=&quot;something = $event.target.value&quot;&gt;</span><br><span class="line">//When used with a component, this simplifies to:</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Customizing Component v-model:New in 2.2.0</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;my-checkbox v-model=&quot;foo&quot; value=&quot;some value&quot;&gt;&lt;/my-checkbox&gt;//or</span><br><span class="line">&lt;my-checkbox</span><br><span class="line">  :checked=&quot;foo&quot;</span><br><span class="line">  @change=&quot;val =&gt; &#123; foo = val &#125;&quot;</span><br><span class="line">  value=&quot;some value&quot;&gt;</span><br><span class="line">&lt;/my-checkbox&gt;</span><br><span class="line">//js</span><br><span class="line">Vue.component(&apos;my-checkbox&apos;, &#123;</span><br><span class="line">  model: &#123;</span><br><span class="line">    prop: &apos;checked&apos;,</span><br><span class="line">    event: &apos;change&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  props: &#123;</span><br><span class="line">    // this allows using the `value` prop for a different purpose</span><br><span class="line">    value: String</span><br><span class="line">  &#125;,</span><br><span class="line">  // ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Non Parent-Child Communication</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var bus = new Vue()</span><br><span class="line">// in component A&apos;s method</span><br><span class="line">bus.$emit(&apos;id-selected&apos;, 1)</span><br><span class="line">// in component B&apos;s created hook</span><br><span class="line">bus.$on(&apos;id-selected&apos;, function (id) &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="Content-Distribution-with-Slots"><a href="#Content-Distribution-with-Slots" class="headerlink" title="Content Distribution with Slots"></a>Content Distribution with Slots</h3><h3 id="Dynamic-Components"><a href="#Dynamic-Components" class="headerlink" title="Dynamic Components"></a>Dynamic Components</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;keep-alive&gt;</span><br><span class="line">  &lt;component :is=&quot;currentView&quot;&gt;</span><br><span class="line">    &lt;!-- inactive components will be cached! --&gt;</span><br><span class="line">  &lt;/component&gt;</span><br><span class="line">&lt;/keep-alive&gt;</span><br><span class="line">//js</span><br><span class="line">var vm = new Vue(&#123;</span><br><span class="line">  el: &apos;#example&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    currentView: &apos;home&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  components: &#123;</span><br><span class="line">    home: &#123; /* ... */ &#125;,</span><br><span class="line">    posts: &#123; /* ... */ &#125;,</span><br><span class="line">    archive: &#123; /* ... */ &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h3><ul>
+<li>Authoring Reusable Components</li>
+</ul>
+<blockquote>
+<p>The API for a Vue component comes in three parts - props, events, and slots:</p>
+</blockquote>
+<pre><code>+ Props :allow the external environment to pass data into the component
+    允许外部环境向组件内传数据
++ Events :allow the component to trigger side effects in the external environment
+    允许组件触发边际响应到外部环境
++ Slots :allow the external environment to compose the component with extra content.
+    允许外部环境用额外内容完善组件
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-component</span><br><span class="line">  :foo=&quot;baz&quot;</span><br><span class="line">  :bar=&quot;qux&quot;</span><br><span class="line">  @event-a=&quot;doThis&quot;</span><br><span class="line">  @event-b=&quot;doThat&quot;</span><br><span class="line">&gt;</span><br><span class="line">  &lt;img slot=&quot;icon&quot; src=&quot;...&quot;&gt;</span><br><span class="line">  &lt;p slot=&quot;main-text&quot;&gt;Hello!&lt;/p&gt;</span><br><span class="line">&lt;/my-component&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Child Component Refs:directly access a child component in JS.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;div id=&quot;parent&quot;&gt;</span><br><span class="line">  &lt;user-profile ref=&quot;profile&quot;&gt;&lt;/user-profile&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">//js</span><br><span class="line">var parent = new Vue(&#123; el: &apos;#parent&apos; &#125;)</span><br><span class="line">// access child component instance</span><br><span class="line">var child = parent.$refs.profile</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>小心坑：$refs are only populated after the component has been rendered, and it is not reactive.<br>It is only meant as an escape hatch for direct child manipulation - you should avoid using $refs in templates or computed properties.</p>
+</blockquote>
+<ul>
+<li>Async Components</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&apos;async-example&apos;, function (resolve, reject) &#123;</span><br><span class="line">  setTimeout(function () &#123;</span><br><span class="line">    // Pass the component definition to the resolve callback</span><br><span class="line">    resolve(&#123;</span><br><span class="line">      template: &apos;&lt;div&gt;I am async!&lt;/div&gt;&apos;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, 1000)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Component Naming Conventions</li>
+<li>Recursive(递归) Components</li>
+<li>Circular References Between Components</li>
+<li>Inline Templates</li>
+<li>X-Templates</li>
+<li>Cheap Static Components with v-once</li>
+</ul>
+<h1 id="Advanced"><a href="#Advanced" class="headerlink" title="Advanced"></a>Advanced</h1><h2 id="Reactivity-in"><a href="#Reactivity-in" class="headerlink" title="Reactivity in"></a>Reactivity in</h2><blockquote>
+<p>Models are just plain JavaScript objects. When you modify them, the view updates. It makes state management very<br>simple and intuitive, but it’s also important to understand how it works to avoid some common gotchas.<br>模型层(model)只是普通 JavaScript 对象，修改它则更新视图(view)。这会让状态管理变得非常简单且直观</p>
+</blockquote>
+<h3 id="How-Changes-Are-Tracked"><a href="#How-Changes-Are-Tracked" class="headerlink" title="How Changes Are Tracked"></a>How Changes Are Tracked</h3><blockquote>
+<p>把一个普通 Javascript 对象传给 Vue 实例的 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty<br>把这些属性全部转为 getter/setter。</p>
+</blockquote>
+<p>![<a href="https://vuefe.cn/images/data.png][https://vuefe.cn/images/data.png]" target="_blank" rel="noopener">https://vuefe.cn/images/data.png][https://vuefe.cn/images/data.png]</a></p>
+<h3 id="Change-Detection-Caveats-变化检测局限"><a href="#Change-Detection-Caveats-变化检测局限" class="headerlink" title="Change Detection Caveats 变化检测局限"></a>Change Detection Caveats 变化检测局限</h3><blockquote>
+<p>Vue cannot detect property addition or deletion.Since Vue performs the getter/setter conversion process<br>during instance initialization, a property must be present in the data object in order for Vue to convert it and make it reactive.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var vm = new Vue(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    a: 1</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">// `vm.a` is now reactive</span><br><span class="line">vm.b = 2</span><br><span class="line">// `vm.b` is NOT reactive</span><br><span class="line">Vue.set(vm.someObject, &apos;b&apos;, 2);</span><br><span class="line">//</span><br><span class="line">this.$set(this.someObject, &apos;b&apos;, 2)</span><br></pre></td></tr></table></figure>
+<h3 id="Declaring-Reactive-Properties"><a href="#Declaring-Reactive-Properties" class="headerlink" title="Declaring Reactive Properties"></a>Declaring Reactive Properties</h3><h3 id="Async-Update-Queue"><a href="#Async-Update-Queue" class="headerlink" title="Async Update Queue"></a>Async Update Queue</h3><blockquote>
+<p>Vue performs DOM updates asynchronously. Whenever a data change is observed,<br>it will open a queue and buffer all the data changes that happen in the same event loop.<br>Internally Vue tries native Promise.then<br>and MutationObserver for the asynchronous queuing and falls back to setTimeout(fn, 0).</p>
+</blockquote>
+<ul>
+<li>In order to wait until Vue.js has finished updating the DOM after a data change, you can use Vue.nextTick(callback) immediately after the data is changed.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&apos;example&apos;, &#123;</span><br><span class="line">  template: &apos;&lt;span&gt;&#123;&#123; message &#125;&#125;&lt;/span&gt;&apos;,</span><br><span class="line">  data: function () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      message: &apos;not updated&apos;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    updateMessage: function () &#123;</span><br><span class="line">      this.message = &apos;updated&apos;</span><br><span class="line">      console.log(this.$el.textContent) // =&gt; &apos;not updated&apos;</span><br><span class="line">      this.$nextTick(function () &#123;</span><br><span class="line">        console.log(this.$el.textContent) // =&gt; &apos;updated&apos;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Transition-Effects"><a href="#Transition-Effects" class="headerlink" title="Transition Effects"></a>Transition Effects</h2><blockquote>
+<p>Vue provides a variety of ways to apply transition effects when items are inserted, updated, or removed from the DOM. This includes tools to:</p>
+</blockquote>
+<ul>
+<li>automatically apply classes for CSS transitions and animations</li>
+<li>integrate 3rd-party CSS animation libraries, such as Animate.css</li>
+<li>use JavaScript to directly manipulate the DOM during transition hooks</li>
+<li>integrate 3rd-party JavaScript animation libraries, such as Velocity.js</li>
+</ul>
+<h3 id="Transitioning-Single-Elements-Components"><a href="#Transitioning-Single-Elements-Components" class="headerlink" title="Transitioning Single Elements/Components"></a>Transitioning Single Elements/Components</h3><ul>
+<li>transitions for any element or component in the following contexts:<ul>
+<li>Conditional rendering (using v-if)</li>
+<li>Conditional display (using v-show)</li>
+<li>Dynamic components</li>
+<li>Component root nodes</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;div id=&quot;demo&quot;&gt;</span><br><span class="line">  &lt;button v-on:click=&quot;show = !show&quot;&gt;</span><br><span class="line">    Toggle</span><br><span class="line">  &lt;/button&gt;</span><br><span class="line">  &lt;transition name=&quot;fade&quot;&gt;</span><br><span class="line">    &lt;p v-if=&quot;show&quot;&gt;hello&lt;/p&gt;</span><br><span class="line">  &lt;/transition&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">//js</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#demo&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    show: true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">//css</span><br><span class="line">.fade-enter-active, .fade-leave-active &#123;</span><br><span class="line">  transition: opacity .5s</span><br><span class="line">&#125;</span><br><span class="line">.fade-enter, .fade-leave-to /* .fade-leave-active in &lt;2.1.8 */ &#123;</span><br><span class="line">  opacity: 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Transition Classes</p>
+<ol>
+<li>v-enter</li>
+<li>v-enter-active</li>
+<li>v-enter-to</li>
+<li>v-leave</li>
+<li>v-leave-active</li>
+<li>v-leave-to</li>
+</ol>
+</li>
+<li><p>CSS Transitions</p>
+</li>
+</ul>
+<blockquote>
+<p>One of the most common transition types uses CSS transitions</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;div id=&quot;example-1&quot;&gt;</span><br><span class="line">  &lt;button @click=&quot;show = !show&quot;&gt;</span><br><span class="line">    Toggle render</span><br><span class="line">  &lt;/button&gt;</span><br><span class="line">  &lt;transition name=&quot;slide-fade&quot;&gt;</span><br><span class="line">    &lt;p v-if=&quot;show&quot;&gt;hello&lt;/p&gt;</span><br><span class="line">  &lt;/transition&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">//js</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#example-1&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    show: true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">//css</span><br><span class="line">/* Enter and leave animations can use different */</span><br><span class="line">/* durations and timing functions.              */</span><br><span class="line">.slide-fade-enter-active &#123;</span><br><span class="line">  transition: all .3s ease;</span><br><span class="line">&#125;</span><br><span class="line">.slide-fade-leave-active &#123;</span><br><span class="line">  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);</span><br><span class="line">&#125;</span><br><span class="line">.slide-fade-enter, .slide-fade-leave-to</span><br><span class="line">/* .slide-fade-leave-active for &lt;2.1.8 */ &#123;</span><br><span class="line">  transform: translateX(10px);</span><br><span class="line">  opacity: 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CSS Animations</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;div id=&quot;example-2&quot;&gt;</span><br><span class="line">  &lt;button @click=&quot;show = !show&quot;&gt;Toggle show&lt;/button&gt;</span><br><span class="line">  &lt;transition name=&quot;bounce&quot;&gt;</span><br><span class="line">    &lt;p v-if=&quot;show&quot;&gt;Look at me!&lt;/p&gt;</span><br><span class="line">  &lt;/transition&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">//js</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#example-2&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    show: true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">//css</span><br><span class="line">.bounce-enter-active &#123;</span><br><span class="line">  animation: bounce-in .5s;</span><br><span class="line">&#125;</span><br><span class="line">.bounce-leave-active &#123;</span><br><span class="line">  animation: bounce-out .5s;</span><br><span class="line">&#125;</span><br><span class="line">@keyframes bounce-in &#123;</span><br><span class="line">  0% &#123;</span><br><span class="line">    transform: scale(0);</span><br><span class="line">  &#125;</span><br><span class="line">  50% &#123;</span><br><span class="line">    transform: scale(1.5);</span><br><span class="line">  &#125;</span><br><span class="line">  100% &#123;</span><br><span class="line">    transform: scale(1);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@keyframes bounce-out &#123;</span><br><span class="line">  0% &#123;</span><br><span class="line">    transform: scale(1);</span><br><span class="line">  &#125;</span><br><span class="line">  50% &#123;</span><br><span class="line">    transform: scale(1.5);</span><br><span class="line">  &#125;</span><br><span class="line">  100% &#123;</span><br><span class="line">    transform: scale(0);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Custom Transition Classes<ul>
+<li>enter-class</li>
+<li>enter-active-class</li>
+<li>enter-to-class (&gt;= 2.1.8 only)</li>
+<li>leave-class</li>
+<li>leave-active-class</li>
+<li>leave-to-class (&gt;= 2.1.8 only)</li>
+</ul>
+</li>
+<li>Using Transitions and Animations Together</li>
+<li>Explicit Transition Durations:显式转换持续时间</li>
+<li>JS Hooks</li>
+</ul>
+<h3 id="Transitions-on-Initial-Render"><a href="#Transitions-on-Initial-Render" class="headerlink" title="Transitions on Initial Render"></a>Transitions on Initial Render</h3><h3 id="Transitioning-Between-Elements"><a href="#Transitioning-Between-Elements" class="headerlink" title="Transitioning Between Elements"></a>Transitioning Between Elements</h3><ul>
+<li>Transition Modes</li>
+</ul>
+<h3 id="Transitioning-Between-Components"><a href="#Transitioning-Between-Components" class="headerlink" title="Transitioning Between Components"></a>Transitioning Between Components</h3><h2 id="Transitioning-State"><a href="#Transitioning-State" class="headerlink" title="Transitioning State"></a>Transitioning State</h2><blockquote>
+<p>Vue’s transition system offers many simple ways to animate entering,<br>leaving, and lists, but what about animating your data itself? For example:</p>
+</blockquote>
+<pre><code>- numbers and calculations
+- colors displayed
+- the positions of SVG nodes
+- the sizes and other properties of elements
+</code></pre><h2 id="Render-Functions"><a href="#Render-Functions" class="headerlink" title="Render Functions"></a>Render Functions</h2><h3 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h3><blockquote>
+<p>Vue 推荐用 template 构建 html 在多数场景。当真需要 JS 的全编程能力时再用 render 函数–一个接近编译器的可选的 template.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//小示例</span><br><span class="line">Vue.component(&apos;anchored-heading&apos;, &#123;</span><br><span class="line">  render: function (createElement) &#123;</span><br><span class="line">    return createElement(</span><br><span class="line">      &apos;h&apos; + this.level,   // tag name</span><br><span class="line">      this.$slots.default // array of children</span><br><span class="line">    )</span><br><span class="line">  &#125;,</span><br><span class="line">  props: &#123;</span><br><span class="line">    level: &#123;</span><br><span class="line">      type: Number,</span><br><span class="line">      required: true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Much simpler! Sort of. The code is shorter, but also requires greater familiarity with Vue instance properties.</li>
+</ul>
+<h3 id="createElement-Arguments"><a href="#createElement-Arguments" class="headerlink" title="createElement Arguments"></a>createElement Arguments</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// @returns &#123;VNode&#125;</span><br><span class="line">createElement(</span><br><span class="line">  // &#123;String | Object | Function&#125;</span><br><span class="line">  // An HTML tag name, component options, or function</span><br><span class="line">  // returning one of these. Required.</span><br><span class="line">  &apos;div&apos;,</span><br><span class="line">  // &#123;Object&#125;</span><br><span class="line">  // A data object corresponding to the attributes</span><br><span class="line">  // you would use in a template. Optional.</span><br><span class="line">  &#123;</span><br><span class="line">    // (see details in the next section below)</span><br><span class="line">  &#125;,</span><br><span class="line">  // &#123;String | Array&#125;</span><br><span class="line">  // Children VNodes. Optional.</span><br><span class="line">  [</span><br><span class="line">    createElement(&apos;h1&apos;, &apos;hello world&apos;),</span><br><span class="line">    createElement(MyComponent, &#123;</span><br><span class="line">      props: &#123;</span><br><span class="line">        someProp: &apos;foo&apos;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;),</span><br><span class="line">    &apos;bar&apos;</span><br><span class="line">  ]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>The Data Object In-Depth</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  // Same API as `v-bind:class`</span><br><span class="line">  &apos;class&apos;: &#123;</span><br><span class="line">    foo: true,</span><br><span class="line">    bar: false</span><br><span class="line">  &#125;,</span><br><span class="line">  // Same API as `v-bind:style`</span><br><span class="line">  style: &#123;</span><br><span class="line">    color: &apos;red&apos;,</span><br><span class="line">    fontSize: &apos;14px&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  // Normal HTML attributes</span><br><span class="line">  attrs: &#123;</span><br><span class="line">    id: &apos;foo&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  // Component props</span><br><span class="line">  props: &#123;</span><br><span class="line">    myProp: &apos;bar&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  // DOM properties</span><br><span class="line">  domProps: &#123;</span><br><span class="line">    innerHTML: &apos;baz&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  // Event handlers are nested under &quot;on&quot;, though</span><br><span class="line">  // modifiers such as in v-on:keyup.enter are not</span><br><span class="line">  // supported. You&apos;ll have to manually check the</span><br><span class="line">  // keyCode in the handler instead.</span><br><span class="line">  on: &#123;</span><br><span class="line">    click: this.clickHandler</span><br><span class="line">  &#125;,</span><br><span class="line">  // For components only. Allows you to listen to</span><br><span class="line">  // native events, rather than events emitted from</span><br><span class="line">  // the component using vm.$emit.</span><br><span class="line">  nativeOn: &#123;</span><br><span class="line">    click: this.nativeClickHandler</span><br><span class="line">  &#125;,</span><br><span class="line">  // Custom directives. Note that the binding&apos;s</span><br><span class="line">  // oldValue cannot be set, as Vue keeps track</span><br><span class="line">  // of it for you.</span><br><span class="line">  directives: [</span><br><span class="line">    &#123;</span><br><span class="line">      name: &apos;my-custom-directive&apos;,</span><br><span class="line">      value: &apos;2&apos;</span><br><span class="line">      expression: &apos;1 + 1&apos;,</span><br><span class="line">      arg: &apos;foo&apos;,</span><br><span class="line">      modifiers: &#123;</span><br><span class="line">        bar: true</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  // Scoped slots in the form of</span><br><span class="line">  // &#123; name: props =&gt; VNode | Array&lt;VNode&gt; &#125;</span><br><span class="line">  scopedSlots: &#123;</span><br><span class="line">    default: props =&gt; createElement(&apos;span&apos;, props.text)</span><br><span class="line">  &#125;,</span><br><span class="line">  // The name of the slot, if this component is the</span><br><span class="line">  // child of another component</span><br><span class="line">  slot: &apos;name-of-slot&apos;</span><br><span class="line">  // Other special top-level properties</span><br><span class="line">  key: &apos;myKey&apos;,</span><br><span class="line">  ref: &apos;myRef&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Constraints: VNodes Must Be Unique</li>
+</ul>
+<h3 id="Replacing-Template-Features-with-Plain-JavaScript"><a href="#Replacing-Template-Features-with-Plain-JavaScript" class="headerlink" title="Replacing Template Features with Plain JavaScript"></a>Replacing Template Features with Plain JavaScript</h3><ul>
+<li>v-if and v-for</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">render: function (createElement) &#123;</span><br><span class="line">  if (this.items.length) &#123;</span><br><span class="line">    return createElement(&apos;ul&apos;, this.items.map(function (item) &#123;</span><br><span class="line">      return createElement(&apos;li&apos;, item.name)</span><br><span class="line">    &#125;))</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    return createElement(&apos;p&apos;, &apos;No items found.&apos;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>v-model:There is no direct v-model counterpart in render functions - you will have to implement the logic yourself:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">render: function (createElement) &#123;</span><br><span class="line">  var self = this</span><br><span class="line">  return createElement(&apos;input&apos;, &#123;</span><br><span class="line">    domProps: &#123;</span><br><span class="line">      value: self.value</span><br><span class="line">    &#125;,</span><br><span class="line">    on: &#123;</span><br><span class="line">      input: function (event) &#123;</span><br><span class="line">        self.value = event.target.value</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Event &amp; Key Modifiers</p>
+</li>
+<li><p>Slots</p>
+</li>
+</ul>
+<h3 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import AnchoredHeading from &apos;./AnchoredHeading.vue&apos;</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#demo&apos;,</span><br><span class="line">  render (h) &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;AnchoredHeading level=&#123;1&#125;&gt;</span><br><span class="line">        &lt;span&gt;Hello&lt;/span&gt; world!</span><br><span class="line">      &lt;/AnchoredHeading&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="Functional-Components"><a href="#Functional-Components" class="headerlink" title="Functional Components"></a>Functional Components</h3><blockquote>
+<p>The anchored heading component we created earlier is relatively simple. It doesn’t manage any state, watch any<br>state passed to it, and it has no lifecycle methods. Really, it’s just a function with some props.<br>In cases like this, we can mark components as functional, which means that they’re stateless (no data)<br>and instanceless (no this context). A functional component looks like this:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&apos;my-component&apos;, &#123;</span><br><span class="line">  functional: true,</span><br><span class="line">  // To compensate for the lack of an instance,</span><br><span class="line">  // we are now provided a 2nd context argument.</span><br><span class="line">  render: function (createElement, context) &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;,</span><br><span class="line">  // Props are optional</span><br><span class="line">  props: &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>slots() vs children</li>
+</ul>
+<h2 id="Custom-Directives"><a href="#Custom-Directives" class="headerlink" title="Custom Directives"></a>Custom Directives</h2><h3 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h3><blockquote>
+<p>In addition to the default set of directives shipped in core (v-model and v-show), Vue also allows you to register<br>your own custom directives.</p>
+</blockquote>
+<h3 id="Hook-Functions-A-directive-definition-object-can-provide-several-hook-functions-all-optional"><a href="#Hook-Functions-A-directive-definition-object-can-provide-several-hook-functions-all-optional" class="headerlink" title="Hook Functions:A directive definition object can provide several hook functions (all optional):"></a>Hook Functions:A directive definition object can provide several hook functions (all optional):</h3><ul>
+<li>bind:called only once, when the directive is first bound to the element</li>
+<li>inserted:called when the bound element has been inserted into its parent node</li>
+<li>update:called after the containing component has updated, but possibly before its children have updated.</li>
+<li>componentUpdated:called after the containing component and its children have updated.</li>
+<li>unbind:called only once, when the directive is unbound from the element.</li>
+</ul>
+<h3 id="Directive-Hook-Arguments"><a href="#Directive-Hook-Arguments" class="headerlink" title="Directive Hook Arguments"></a>Directive Hook Arguments</h3><blockquote>
+<p>Directive hooks are passed these arguments:</p>
+</blockquote>
+<ul>
+<li>el:The element the directive is bound to. This can be used to directly manipulate the DOM.</li>
+<li>binding:An object containing the following properties.<ul>
+<li>name:The name of the directive, without the v- prefix.</li>
+<li>value: The value passed to the directive(v-my-directive=”1 + 1”)</li>
+<li>oldValue:The previous value, only available in update and componentUpdated.</li>
+<li>expression:he expression of the binding as a string(v-my-directive=”1 + 1”,).</li>
+<li>arg:he argument passed to the directive, if any(v-my-directive:foo).</li>
+<li>modifiers:n object containing modifiers, if any(v-my-directive.foo.bar, the modifiers object would be { foo: true, bar: true }).</li>
+</ul>
+</li>
+<li>vnode:The virtual node produced by Vue’s compiler.</li>
+<li>oldVnode:The previous virtual node, only available in the update and componentUpdated hooks.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">&lt;div id=&quot;hook-arguments-example&quot; v-demo:foo.a.b=&quot;message&quot;&gt;&lt;/div&gt;</span><br><span class="line">//js</span><br><span class="line">Vue.directive(&apos;demo&apos;, &#123;</span><br><span class="line">  bind: function (el, binding, vnode) &#123;</span><br><span class="line">    var s = JSON.stringify</span><br><span class="line">    el.innerHTML =</span><br><span class="line">      &apos;name: &apos;       + s(binding.name) + &apos;&lt;br&gt;&apos; +</span><br><span class="line">      &apos;value: &apos;      + s(binding.value) + &apos;&lt;br&gt;&apos; +</span><br><span class="line">      &apos;expression: &apos; + s(binding.expression) + &apos;&lt;br&gt;&apos; +</span><br><span class="line">      &apos;argument: &apos;   + s(binding.arg) + &apos;&lt;br&gt;&apos; +</span><br><span class="line">      &apos;modifiers: &apos;  + s(binding.modifiers) + &apos;&lt;br&gt;&apos; +</span><br><span class="line">      &apos;vnode keys: &apos; + Object.keys(vnode).join(&apos;, &apos;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#hook-arguments-example&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    message: &apos;hello!&apos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">/*</span><br><span class="line">name:&quot;demo&quot;</span><br><span class="line">value:&quot;hello!&quot;</span><br><span class="line">expression:&quot;message&quot;</span><br><span class="line">argument:&quot;foo&quot;</span><br><span class="line">modifiers:&#123;&quot;a&quot;:true,&quot;b&quot;:true&#125;</span><br><span class="line">vnode keys:tag,data,children,elem,ns,context</span><br><span class="line">functionalContext,key,componentOptions,componentInstance,parent,</span><br><span class="line">raw,isStatic,isRootInsert,isComent,isCloned,isOnce</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<h3 id="Function-Shorthand"><a href="#Function-Shorthand" class="headerlink" title="Function Shorthand"></a>Function Shorthand</h3><h3 id="Object-Literals"><a href="#Object-Literals" class="headerlink" title="Object Literals"></a>Object Literals</h3><blockquote>
+<p>如果指令需要多个值，可以传入一个 JavaScript 对象字面量。记住，指令函数能够接受所有合法类型的 Javascript 表达式。</p>
+</blockquote>
+<h2 id="Mixins"><a href="#Mixins" class="headerlink" title="Mixins"></a>Mixins</h2><h3 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h3><blockquote>
+<p>Mixins are a flexible way to distribute reusable functionalities for Vue components.<br>A mixin object can contain any component options. When a component uses a mixin, all options in the mixin will be<br>“mixed” into the component’s own options.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// define a mixin object</span><br><span class="line">var myMixin = &#123;</span><br><span class="line">  created: function () &#123;</span><br><span class="line">    this.hello()</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    hello: function () &#123;</span><br><span class="line">      console.log(&apos;hello from mixin!&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// define a component that uses this mixin</span><br><span class="line">var Component = Vue.extend(&#123;</span><br><span class="line">  mixins: [myMixin]</span><br><span class="line">&#125;)</span><br><span class="line">var component = new Component() // -&gt; &quot;hello from mixin!&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="Option-Merging"><a href="#Option-Merging" class="headerlink" title="Option Merging"></a>Option Merging</h3><h3 id="Global-Mixin"><a href="#Global-Mixin" class="headerlink" title="Global Mixin"></a>Global Mixin</h3><blockquote>
+<p>Use global mixins sparsely and carefully,<br>because it affects every single Vue instance created, including third party components.</p>
+</blockquote>
+<h3 id="Custom-Option-Merge-Strategies"><a href="#Custom-Option-Merge-Strategies" class="headerlink" title="Custom Option Merge Strategies"></a>Custom Option Merge Strategies</h3><h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><h2 id="Single-File-Components"><a href="#Single-File-Components" class="headerlink" title="Single File Components"></a>Single File Components</h2><blockquote>
+<p>在 JS 只用于增强相应 view 的中小型项目中传统写法凑效，在更复杂的项目或者前端完全由 JS 驱动，如下特色将会彰显</p>
+</blockquote>
+<ul>
+<li>Global definitions force unique names for every component</li>
+<li>String templates lack syntax highlighting and require ugly slashes for multiline HTML</li>
+<li>No CSS support means that while HTML and JavaScript are modularized into components, CSS is conspicuously left out</li>
+<li>No build step restricts us to HTML and ES5 JavaScript, rather than preprocessors like Pug (formerly Jade) and Babel<br>All of these are solved by single-file components with a .vue extension, made possible with build tools such as Webpack or Browserify.</li>
+</ul>
+<h2 id="Production-Deployment-Tips：生产环境部署"><a href="#Production-Deployment-Tips：生产环境部署" class="headerlink" title="Production Deployment Tips：生产环境部署"></a>Production Deployment Tips：生产环境部署</h2><h3 id="Turn-on-Production-Mode"><a href="#Turn-on-Production-Mode" class="headerlink" title="Turn on Production Mode"></a>Turn on Production Mode</h3><ul>
+<li>Without Build Tools <code>vue.min.js</code></li>
+<li>With Build Tools<blockquote>
+<p>When using a build tool like Webpack or Browserify, the production mode will be determined by process.env.NODE_ENV<br>inside Vue’s source code, and it will be in development mode by default.</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var webpack = require(&apos;webpack&apos;)</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  // ...</span><br><span class="line">  plugins: [</span><br><span class="line">    // ...</span><br><span class="line">    new webpack.DefinePlugin(&#123;</span><br><span class="line">      &apos;process.env&apos;: &#123;</span><br><span class="line">        NODE_ENV: &apos;&quot;production&quot;&apos;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Pre-Compiling-Templates"><a href="#Pre-Compiling-Templates" class="headerlink" title="Pre-Compiling Templates"></a>Pre-Compiling Templates</h3><h2 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h2><h2 id="State-Management"><a href="#State-Management" class="headerlink" title="State Management"></a>State Management</h2><blockquote>
+<p>Large applications can often grow in complexity, due to multiple pieces of state scattered across many<br>components and the interactions between them. To solve this problem, Vue offers vuex:</p>
+</blockquote>
+<p>![<a href="http://vuejs.org/images/state.png][http://vuejs.org/images/state.png]" target="_blank" rel="noopener">http://vuejs.org/images/state.png][http://vuejs.org/images/state.png]</a></p>
+<h2 id="Unit-Testing"><a href="#Unit-Testing" class="headerlink" title="Unit Testing"></a>Unit Testing</h2><h2 id="Server-Side-Rendering"><a href="#Server-Side-Rendering" class="headerlink" title="Server-Side Rendering"></a>Server-Side Rendering</h2><h2 id="TypeScript-Surport"><a href="#TypeScript-Surport" class="headerlink" title="TypeScript Surport"></a>TypeScript Surport</h2>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>满分是100分的话，这篇文章你给几分</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/reward/reward_wechat.png" alt="sunny-xl WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/reward/reward_alipay.png" alt="sunny-xl Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/10/2017-06-10-http深入浅出/" rel="next" title="http深入浅出">
+                <i class="fa fa-chevron-left"></i> http深入浅出
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/06/2018-3-6-webpack/" rel="prev" title="webpack 初探">
+                webpack 初探 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/12/23/2017-12-23-vue/" data-title="vue(2.0)全家桶 总结及源码分析" data-content data-url="https://sunny-xl.github.io/2017/12/23/2017-12-23-vue/">
+  <div class="ds-share-inline">
+    <ul class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/avatar/avatar.png" alt="sunny-xl">
+          <p class="site-author-name" itemprop="name">sunny-xl</p>
+          <p class="site-description motion-element" itemprop="description">Stay Hungry,Stay Foolish</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/sunny-xl" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Installation"><span class="nav-number">1.</span> <span class="nav-text">Installation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Runtime-Compiler-vs-Runtime-only"><span class="nav-number">1.1.</span> <span class="nav-text">Runtime+Compiler vs. Runtime-only</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Development-vs-Production-Mode"><span class="nav-number">1.2.</span> <span class="nav-text">Development vs. Production Mode</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#What’s-Vue-js-Vue-is-a-progressive-framework-for-building-user-interfaces"><span class="nav-number">2.1.</span> <span class="nav-text">What’s Vue.js:Vue is a progressive framework for building user interfaces.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Declarative-Rendering-声明式渲染"><span class="nav-number">2.2.</span> <span class="nav-text">Declarative Rendering 声明式渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conditionals-and-Loops"><span class="nav-number">2.3.</span> <span class="nav-text">Conditionals and Loops</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Handling-User-Input"><span class="nav-number">2.4.</span> <span class="nav-text">Handling User Input</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Composing-with-Components"><span class="nav-number">2.5.</span> <span class="nav-text">Composing with Components</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Vue-Instance"><span class="nav-number">3.</span> <span class="nav-text">The Vue Instance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Constructor"><span class="nav-number">3.1.</span> <span class="nav-text">Constructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Instance-Lifecycle-Hooks"><span class="nav-number">3.2.</span> <span class="nav-text">Instance Lifecycle Hooks</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Template-Syntax"><span class="nav-number">4.</span> <span class="nav-text">Template Syntax</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Interpolations-插值"><span class="nav-number">4.1.</span> <span class="nav-text">Interpolations(插值)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Directions—Directives-are-special-attributes-with-the-v-prefix"><span class="nav-number">4.2.</span> <span class="nav-text">Directions—Directives are special attributes with the v- prefix.</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Computed-Properties-and-Watchers"><span class="nav-number">5.</span> <span class="nav-text">Computed Properties and Watchers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Computed-Properties"><span class="nav-number">5.1.</span> <span class="nav-text">Computed Properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Watchers"><span class="nav-number">5.2.</span> <span class="nav-text">Watchers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-and-Style-Bindings"><span class="nav-number">6.</span> <span class="nav-text">Class and Style Bindings</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Binding-HTML-Classes"><span class="nav-number">6.1.</span> <span class="nav-text">Binding HTML Classes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binding-Inline-Styles"><span class="nav-number">6.2.</span> <span class="nav-text">Binding Inline Styles</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List-Rending"><span class="nav-number">7.</span> <span class="nav-text">List Rending</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-if-v-else-if"><span class="nav-number">7.1.</span> <span class="nav-text">v-if/v-else-if</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List-Rendering"><span class="nav-number">8.</span> <span class="nav-text">List Rendering</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-for-We-can-use-the-v-for-directive-to-render-a-list-of-items-based-on-an-array"><span class="nav-number">8.1.</span> <span class="nav-text">v-for:We can use the v-for directive to render a list of items based on an array.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Array-Change-Detection"><span class="nav-number">8.2.</span> <span class="nav-text">Array Change Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Displaying-Filtered-Sorted-Results"><span class="nav-number">8.3.</span> <span class="nav-text">Displaying Filtered/Sorted Results</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Event-Handing"><span class="nav-number">9.</span> <span class="nav-text">Event Handing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Listening-to-Events-use-the-v-on-directive"><span class="nav-number">9.1.</span> <span class="nav-text">Listening to Events:use the v-on directive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method-Event-Handlers-when-event-handlers-are-more-complex"><span class="nav-number">9.2.</span> <span class="nav-text">Method Event Handlers:when event handlers are more complex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Methods-in-Inline-Handlers"><span class="nav-number">9.3.</span> <span class="nav-text">Methods in Inline Handlers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-Modifiers-To-address-the-problem-of-purely-dealing-with-data-logic-rather-than-DOM-event-details"><span class="nav-number">9.4.</span> <span class="nav-text">Event Modifiers:To address the problem of purely dealing with data logic rather than DOM event details</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key-Modifiers-Modifier-Keys"><span class="nav-number">9.5.</span> <span class="nav-text">Key Modifiers/Modifier Keys</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Form-Input-Bindings"><span class="nav-number">10.</span> <span class="nav-text">Form Input Bindings</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Usage"><span class="nav-number">10.1.</span> <span class="nav-text">Basic Usage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Value-Bindings"><span class="nav-number">10.2.</span> <span class="nav-text">Value Bindings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Modifiers"><span class="nav-number">10.3.</span> <span class="nav-text">Modifiers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-model-with-Components"><span class="nav-number">10.4.</span> <span class="nav-text">v-model with Components</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Components"><span class="nav-number">11.</span> <span class="nav-text">Components</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Components"><span class="nav-number">11.1.</span> <span class="nav-text">Using Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Props"><span class="nav-number">11.2.</span> <span class="nav-text">Props</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Custom-Events"><span class="nav-number">11.3.</span> <span class="nav-text">Custom Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content-Distribution-with-Slots"><span class="nav-number">11.4.</span> <span class="nav-text">Content Distribution with Slots</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dynamic-Components"><span class="nav-number">11.5.</span> <span class="nav-text">Dynamic Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Misc"><span class="nav-number">11.6.</span> <span class="nav-text">Misc</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#Advanced"><span class="nav-number"></span> <span class="nav-text">Advanced</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactivity-in"><span class="nav-number">1.</span> <span class="nav-text">Reactivity in</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#How-Changes-Are-Tracked"><span class="nav-number">1.1.</span> <span class="nav-text">How Changes Are Tracked</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Change-Detection-Caveats-变化检测局限"><span class="nav-number">1.2.</span> <span class="nav-text">Change Detection Caveats 变化检测局限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Declaring-Reactive-Properties"><span class="nav-number">1.3.</span> <span class="nav-text">Declaring Reactive Properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Async-Update-Queue"><span class="nav-number">1.4.</span> <span class="nav-text">Async Update Queue</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transition-Effects"><span class="nav-number">2.</span> <span class="nav-text">Transition Effects</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Transitioning-Single-Elements-Components"><span class="nav-number">2.1.</span> <span class="nav-text">Transitioning Single Elements/Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transitions-on-Initial-Render"><span class="nav-number">2.2.</span> <span class="nav-text">Transitions on Initial Render</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transitioning-Between-Elements"><span class="nav-number">2.3.</span> <span class="nav-text">Transitioning Between Elements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transitioning-Between-Components"><span class="nav-number">2.4.</span> <span class="nav-text">Transitioning Between Components</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transitioning-State"><span class="nav-number">3.</span> <span class="nav-text">Transitioning State</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Render-Functions"><span class="nav-number">4.</span> <span class="nav-text">Render Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic"><span class="nav-number">4.1.</span> <span class="nav-text">Basic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createElement-Arguments"><span class="nav-number">4.2.</span> <span class="nav-text">createElement Arguments</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Replacing-Template-Features-with-Plain-JavaScript"><span class="nav-number">4.3.</span> <span class="nav-text">Replacing Template Features with Plain JavaScript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSX"><span class="nav-number">4.4.</span> <span class="nav-text">JSX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Functional-Components"><span class="nav-number">4.5.</span> <span class="nav-text">Functional Components</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Custom-Directives"><span class="nav-number">5.</span> <span class="nav-text">Custom Directives</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Intro"><span class="nav-number">5.1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hook-Functions-A-directive-definition-object-can-provide-several-hook-functions-all-optional"><span class="nav-number">5.2.</span> <span class="nav-text">Hook Functions:A directive definition object can provide several hook functions (all optional):</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Directive-Hook-Arguments"><span class="nav-number">5.3.</span> <span class="nav-text">Directive Hook Arguments</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-Shorthand"><span class="nav-number">5.4.</span> <span class="nav-text">Function Shorthand</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-Literals"><span class="nav-number">5.5.</span> <span class="nav-text">Object Literals</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mixins"><span class="nav-number">6.</span> <span class="nav-text">Mixins</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basics"><span class="nav-number">6.1.</span> <span class="nav-text">Basics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Option-Merging"><span class="nav-number">6.2.</span> <span class="nav-text">Option Merging</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Global-Mixin"><span class="nav-number">6.3.</span> <span class="nav-text">Global Mixin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Custom-Option-Merge-Strategies"><span class="nav-number">6.4.</span> <span class="nav-text">Custom Option Merge Strategies</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plugins"><span class="nav-number">7.</span> <span class="nav-text">Plugins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Single-File-Components"><span class="nav-number">8.</span> <span class="nav-text">Single File Components</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Production-Deployment-Tips：生产环境部署"><span class="nav-number">9.</span> <span class="nav-text">Production Deployment Tips：生产环境部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Turn-on-Production-Mode"><span class="nav-number">9.1.</span> <span class="nav-text">Turn on Production Mode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pre-Compiling-Templates"><span class="nav-number">9.2.</span> <span class="nav-text">Pre-Compiling Templates</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Routing"><span class="nav-number">10.</span> <span class="nav-text">Routing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#State-Management"><span class="nav-number">11.</span> <span class="nav-text">State Management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unit-Testing"><span class="nav-number">12.</span> <span class="nav-text">Unit Testing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Server-Side-Rendering"><span class="nav-number">13.</span> <span class="nav-text">Server-Side Rendering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TypeScript-Surport"><span class="nav-number">14.</span> <span class="nav-text">TypeScript Surport</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sunny-xl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sunny-xl"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+</body>
+</html>
